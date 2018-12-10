@@ -26,12 +26,12 @@ namespace AuctionWeb.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string Telephone { get; set; }
-        public string Email { get; set; }
         public string TrueName { get; set; }
         public string Address { get; set; }
         public string PostBoy { get; set; }
         public string CreditValue { get; set; }
         public Nullable<System.DateTime> RegTime { get; set; }
+        public string IdNum { get; set; }
     
         public virtual ICollection<AuctionDetails> AuctionDetails { get; set; }
         public virtual ICollection<GoodsInfo> GoodsInfo { get; set; }

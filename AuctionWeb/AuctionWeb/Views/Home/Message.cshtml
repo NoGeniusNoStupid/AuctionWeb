@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/FrontMaster.cshtml";
+}
+
+<div class="positions"><h1>在线留言</h1></div>
+<div class="content">
+    <form id="message" action="#" method="get">
+        <div class="messList">
+            <label>姓名：</label><input type="text" class="inputWidth" />
+        </div>
+        <div class="messList">
+            <label>性别：</label> 男<input type="radio" checked="checked" /> 女<input type="radio" />
+        </div>
+        <div class="messList">
+            <label>联系方式：</label><input type="text" class="inputWidth" />
+        </div>
+        <div class="messList2">
+            <label>留言内容：</label>
+            <textarea maxlength="40">
+
+            </textarea>
+        </div>
+        <div class="mes">
+            <input type="submit" value="提 交" />
+            <input type="reset" value="重 填">
+        </div>
+    </form>
+</div><!--content/-->
