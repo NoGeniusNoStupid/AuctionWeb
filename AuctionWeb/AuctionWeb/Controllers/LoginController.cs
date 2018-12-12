@@ -8,11 +8,10 @@ using System.Web.Mvc;
 
 namespace AuctionWeb.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         //
         // GET: /Login/
-
         public ActionResult Login()
         {
             return View();
@@ -43,10 +42,10 @@ namespace AuctionWeb.Controllers
         [HttpPost]
         public ActionResult Register(Purchaser purchaser)
         {
+            DB.Purchaser.Add(purchaser);
+            DB.SaveChanges();
             return View();
         }
-
-
         public ActionResult AdminLogin()
         {
             return View();

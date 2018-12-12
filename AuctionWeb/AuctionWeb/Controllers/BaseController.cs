@@ -12,7 +12,7 @@ namespace AuctionWeb.Controllers
         /// <summary>
         /// 数据库操作对象
         /// </summary>
-        public AuctionWebEntities Entity
+        public AuctionWebEntities DB
         {
             get
             {

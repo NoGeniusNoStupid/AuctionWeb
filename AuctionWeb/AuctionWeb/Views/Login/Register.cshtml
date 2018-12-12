@@ -2,10 +2,22 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/FrontMaster.cshtml";
 }
-
+@section scripts{
+       <script>
+           function submit() {
+               var myform = document.getElementById("message");
+               var Username = document.getElementById("Username").value;
+               if (Username == "") {
+                   alert("请输入用户名");
+                   return false;
+               }
+               myform.submit();
+           }
+       </script>
+    }
 <div class="positions"><h1>注册</h1></div>
 <div class="content">
-    <form id="message" action="#" method="get">
+    <form id="message" action="/Login/Register" method="post">
         <div class="messList">
             <label>用户名：</label><input type="text" id="Username" name="Username" class="inputWidth" />
         </div>
@@ -27,11 +39,8 @@
         <div class="messList">
             <label>联系地址：</label><input type="text" id="Address" name="Address" class="inputWidth" />
         </div>
-        <div class="messList">
-            <label>邮编：</label><input type="text" class="inputWidth" />
-        </div>
         <div class="mes">
-            <input type="submit" value="提 交" />
+            <a href="#"  onclick="submit()">提 交</a>
             <input type="reset" value="重 填">
         </div>
     </form>

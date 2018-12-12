@@ -3,4 +3,74 @@
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
 
-
+<section>
+    <h2><strong style="color:grey;">分列内容布局</strong></h2>
+    <form method="post" action="/GoodsInfo/Add"> 
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">商品名称：</span>
+                <input type="text" id="GoodsName" name="GoodsName" class="textbox textbox_295" placeholder="商品名称" />
+            </li>
+            <li>
+                <span class="item_name"  style="width:120px;">商品类型：</span>
+                <select class="select" id="GoodsType" name="GoodsType">
+                    <option selected="selected">古董</option>
+                    <option>珠宝</option>
+                    <option>资产</option>
+                    <option>房产</option>
+                    <option>汽车</option>
+                    <option>奢侈品</option>
+                    <option>文玩</option>
+                    <option>其他</option>
+                </select>
+                @*<span class="errorTips">错误提示信息...</span>*@
+            </li> 
+            <li>
+                <span class="item_name" style="width:120px;">详细描述：</span>
+                <textarea placeholder="详细描述" id="GoodsDescription" name="GoodsDescription" class="textarea" style="width:500px;height:100px;"></textarea>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">上传图片：</span>
+                <label class="uploadImg">
+                    <input type="file" id="ImagePath" name="ImagePath" />
+                    <span>上传图片</span>
+                </label>
+                <img src="#" id="pic" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">商品数量：</span>
+                <input type="text" id="Num" name="Num" class="textbox textbox_295" placeholder="请输入整数" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">起拍价格：</span>
+                <input type="text" id="BeginPrice" name="BeginPrice" class="textbox textbox_295" placeholder="请输入数字" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">竞价阶梯：</span>
+                <input type="text" id="PriceLevel" name="PriceLevel" class="textbox textbox_295" placeholder="请输入数字如：1000" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">起拍时间：</span>
+                <input type="datetime-local" id="StartTime" name="StartTime" class="textbox textbox_295"  />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">结束时间：</span>
+                <input type="datetime-local" id="EndTime" name="EndTime" class="textbox textbox_295"  />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">倒计时：</span>
+                <input type="number" id="EndTime" name="EndTime" class="textbox textbox_295" />
+            </li>
+            @*<li>
+                <span class="item_name" style="width:120px;">是否热销：</span>
+                <label class="single_selection"><input type="radio" name="name" />推荐</label>
+                <label class="single_selection"><input type="radio" name="name" />不推荐</label>
+            </li>*@
+           
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <input type="submit" class="link_btn" />
+            </li>
+        </ul>
+    </form>
+</section>

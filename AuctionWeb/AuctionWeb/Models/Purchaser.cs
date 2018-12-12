@@ -11,6 +11,7 @@ namespace AuctionWeb.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Purchaser
     {
@@ -23,6 +24,8 @@ namespace AuctionWeb.Models
         }
     
         public int Id { get; set; }
+
+        //[Required(ErrorMessage = "不能为空")]
         public string Username { get; set; }
         public string Password { get; set; }
         public string Telephone { get; set; }

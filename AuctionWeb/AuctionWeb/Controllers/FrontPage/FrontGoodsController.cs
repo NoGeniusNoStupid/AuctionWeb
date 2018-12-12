@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AuctionWeb.Controllers.AdminPage
+namespace AuctionWeb.Controllers.FrontPage
 {
-    public class AdminBaseController : BaseController
+    public class FrontGoodsController : Controller
     {
         
     }
