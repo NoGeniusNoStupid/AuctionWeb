@@ -12,20 +12,15 @@ namespace AuctionWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Administrators
+    public partial class News
     {
-        public Administrators()
-        {
-            this.GoodsInfo = new HashSet<GoodsInfo>();
-            this.News = new HashSet<News>();
-        }
-    
         public int Id { get; set; }
-        public string AdminName { get; set; }
-        public string AdminPwd { get; set; }
+        public string Title { get; set; }
+        public Nullable<int> AdminId { get; set; }
+        public string Author { get; set; }
+        public Nullable<int> ClickNum { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
     
-        public virtual ICollection<GoodsInfo> GoodsInfo { get; set; }
-        public virtual ICollection<News> News { get; set; }
+        public virtual Administrators Administrators { get; set; }
     }
 }

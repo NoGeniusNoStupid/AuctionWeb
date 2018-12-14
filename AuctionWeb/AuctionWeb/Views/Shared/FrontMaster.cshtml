@@ -11,7 +11,7 @@
     <link type="text/css" href="/Content/css/css.css" rel="stylesheet" />
     <script type=text/javascript src="/Content/js/jquery.js"></script>
     <script type=text/javascript src="/Content/js/kefu.js"></script>
-   
+    <script src="~/Content/Verification.js"></script>
     @RenderSection("scripts", required: false)
 </head>
 
@@ -22,8 +22,8 @@
             <div class="contLeft">
                 <h1 class="logo"><a href="index.html"><img src="/Content/images/logo.png" width="183" height="160" /></a></h1>
                 <ul class="nav">
+                    @*<li><a href="/Home/Index">首页</a></li>*@
                     <li><a href="/Home/Index">首页</a></li>
-                    <li><a href="/Home/About">关于我们</a></li>
                     <li><a href="/Home/Show">在线竞拍</a></li>
                     <li><a href="/Home/DongTai">网站公告</a></li>
                     <li><a href="/Home/Message">在线留言</a></li>

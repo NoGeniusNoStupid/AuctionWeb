@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AuctionWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="AuctionWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Administrators">
           <Key>
             <PropertyRef Name="Id" />
@@ -49,9 +49,10 @@
           <Property Name="StartTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
           <Property Name="CountDown" Type="varchar" MaxLength="50" />
-          <Property Name="SellerId" Type="int" />
           <Property Name="AddTime" Type="datetime" />
           <Property Name="isSucc" Type="varchar" MaxLength="50" />
+          <Property Name="PurchaserId" Type="int" />
+          <Property Name="AdminId" Type="int" />
         </EntityType>
         <EntityType Name="LeaveWord">
           <Key>
@@ -61,6 +62,17 @@
           <Property Name="LContent" Type="varchar" MaxLength="500" />
           <Property Name="LTime" Type="datetime" />
           <Property Name="PurchaserId" Type="int" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="AdminId" Type="int" />
+          <Property Name="Author" Type="nchar" MaxLength="10" />
+          <Property Name="ClickNum" Type="int" />
           <Property Name="AddTime" Type="datetime" />
         </EntityType>
         <EntityType Name="OrderInfo">
@@ -88,7 +100,7 @@
           <Property Name="IdNum" Type="varchar" MaxLength="50" />
           <Property Name="TrueName" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
-          <Property Name="PostBoy" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="CreditValue" Type="varchar" MaxLength="50" />
           <Property Name="RegTime" Type="datetime" />
         </EntityType>
@@ -128,17 +140,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GoodsInfo_Administrators">
+          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrators">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsInfo">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GoodsInfo_Purchaser">
-          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Purchaser">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="GoodsInfo">
-              <PropertyRef Name="SellerId" />
+              <PropertyRef Name="PurchaserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -153,6 +175,18 @@
             </Principal>
             <Dependent Role="LeaveWord">
               <PropertyRef Name="PurchaserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Administrators">
+          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrators">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="AdminId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -186,6 +220,7 @@
           <EntitySet Name="Evaluate" EntityType="Self.Evaluate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodsInfo" EntityType="Self.GoodsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveWord" EntityType="Self.LeaveWord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchaser" EntityType="Self.Purchaser" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AuctionDetails_GoodsInfo" Association="Self.FK_AuctionDetails_GoodsInfo">
@@ -200,6 +235,10 @@
             <End Role="OrderInfo" EntitySet="OrderInfo" />
             <End Role="Evaluate" EntitySet="Evaluate" />
           </AssociationSet>
+          <AssociationSet Name="FK_GoodsInfo_Administrators" Association="Self.FK_GoodsInfo_Administrators">
+            <End Role="Administrators" EntitySet="Administrators" />
+            <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoodsInfo_Purchaser" Association="Self.FK_GoodsInfo_Purchaser">
             <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
@@ -207,6 +246,10 @@
           <AssociationSet Name="FK_leaveWord_Purchaser" Association="Self.FK_leaveWord_Purchaser">
             <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="LeaveWord" EntitySet="LeaveWord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Administrators" Association="Self.FK_News_Administrators">
+            <End Role="Administrators" EntitySet="Administrators" />
+            <End Role="News" EntitySet="News" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderInfo_GoodsInfo" Association="Self.FK_OrderInfo_GoodsInfo">
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
@@ -217,7 +260,8 @@
             <End Role="OrderInfo" EntitySet="OrderInfo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AuctionWebModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -229,6 +273,8 @@
           <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AdminPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_GoodsInfo_Administrators" FromRole="Administrators" ToRole="GoodsInfo" />
+          <NavigationProperty Name="News" Relationship="Self.FK_News_Administrators" FromRole="Administrators" ToRole="News" />
         </EntityType>
         <EntityType Name="AuctionDetails">
           <Key>
@@ -268,9 +314,11 @@
           <Property Name="StartTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="CountDown" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SellerId" Type="Int32" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <Property Name="isSucc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaserId" Type="Int32" />
+          <Property Name="AdminId" Type="Int32" />
+          <NavigationProperty Name="Administrators" Relationship="Self.FK_GoodsInfo_Administrators" FromRole="GoodsInfo" ToRole="Administrators" />
           <NavigationProperty Name="AuctionDetails" Relationship="Self.FK_AuctionDetails_GoodsInfo" FromRole="GoodsInfo" ToRole="AuctionDetails" />
           <NavigationProperty Name="Purchaser" Relationship="Self.FK_GoodsInfo_Purchaser" FromRole="GoodsInfo" ToRole="Purchaser" />
           <NavigationProperty Name="OrderInfo" Relationship="Self.FK_OrderInfo_GoodsInfo" FromRole="GoodsInfo" ToRole="OrderInfo" />
@@ -285,6 +333,18 @@
           <Property Name="PurchaserId" Type="Int32" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Purchaser" Relationship="Self.FK_leaveWord_Purchaser" FromRole="LeaveWord" ToRole="Purchaser" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AdminId" Type="Int32" />
+          <Property Name="Author" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClickNum" Type="Int32" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Administrators" Relationship="Self.FK_News_Administrators" FromRole="News" ToRole="Administrators" />
         </EntityType>
         <EntityType Name="OrderInfo">
           <Key>
@@ -311,17 +371,41 @@
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TrueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PostBoy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreditValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RegTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AuctionDetails" Relationship="Self.FK_AuctionDetails_Purchaser" FromRole="Purchaser" ToRole="AuctionDetails" />
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_GoodsInfo_Purchaser" FromRole="Purchaser" ToRole="GoodsInfo" />
           <NavigationProperty Name="LeaveWord" Relationship="Self.FK_leaveWord_Purchaser" FromRole="Purchaser" ToRole="LeaveWord" />
           <NavigationProperty Name="OrderInfo" Relationship="Self.FK_OrderInfo_Purchaser" FromRole="Purchaser" ToRole="OrderInfo" />
-          <Property Name="IdNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_GoodsInfo_Administrators">
+          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrators">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsInfo">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Administrators">
+          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
+          <End Role="News" Type="Self.News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrators">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AuctionDetails_GoodsInfo">
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1" />
           <End Role="AuctionDetails" Type="Self.AuctionDetails" Multiplicity="*" />
@@ -359,16 +443,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GoodsInfo_Purchaser">
-          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Purchaser">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="GoodsInfo">
-              <PropertyRef Name="SellerId" />
+              <PropertyRef Name="PurchaserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -416,8 +498,17 @@
           <EntitySet Name="Evaluate" EntityType="Self.Evaluate" />
           <EntitySet Name="GoodsInfo" EntityType="Self.GoodsInfo" />
           <EntitySet Name="LeaveWord" EntityType="Self.LeaveWord" />
+          <EntitySet Name="News" EntityType="Self.News" />
           <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" />
           <EntitySet Name="Purchaser" EntityType="Self.Purchaser" />
+          <AssociationSet Name="FK_GoodsInfo_Administrators" Association="Self.FK_GoodsInfo_Administrators">
+            <End Role="Administrators" EntitySet="Administrators" />
+            <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Administrators" Association="Self.FK_News_Administrators">
+            <End Role="Administrators" EntitySet="Administrators" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
           <AssociationSet Name="FK_AuctionDetails_GoodsInfo" Association="Self.FK_AuctionDetails_GoodsInfo">
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
             <End Role="AuctionDetails" EntitySet="AuctionDetails" />
@@ -499,9 +590,10 @@
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="CountDown" ColumnName="CountDown" />
-                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
                 <ScalarProperty Name="isSucc" ColumnName="isSucc" />
+                <ScalarProperty Name="PurchaserId" ColumnName="PurchaserId" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -512,6 +604,18 @@
                 <ScalarProperty Name="LContent" ColumnName="LContent" />
                 <ScalarProperty Name="LTime" ColumnName="LTime" />
                 <ScalarProperty Name="PurchaserId" ColumnName="PurchaserId" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="AuctionWebModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="ClickNum" ColumnName="ClickNum" />
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -534,14 +638,14 @@
           <EntitySetMapping Name="Purchaser">
             <EntityTypeMapping TypeName="AuctionWebModel.Purchaser">
               <MappingFragment StoreEntitySet="Purchaser">
-                <ScalarProperty Name="IdNum" ColumnName="IdNum" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="IdNum" ColumnName="IdNum" />
                 <ScalarProperty Name="TrueName" ColumnName="TrueName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="PostBoy" ColumnName="PostBoy" />
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="CreditValue" ColumnName="CreditValue" />
                 <ScalarProperty Name="RegTime" ColumnName="RegTime" />
               </MappingFragment>

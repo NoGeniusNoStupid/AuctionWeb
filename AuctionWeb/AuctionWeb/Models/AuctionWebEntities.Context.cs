@@ -30,6 +30,7 @@ namespace AuctionWeb.Models
         public DbSet<Evaluate> Evaluate { get; set; }
         public DbSet<GoodsInfo> GoodsInfo { get; set; }
         public DbSet<LeaveWord> LeaveWord { get; set; }
+        public DbSet<News> News { get; set; }
         public DbSet<OrderInfo> OrderInfo { get; set; }
         public DbSet<Purchaser> Purchaser { get; set; }
     }

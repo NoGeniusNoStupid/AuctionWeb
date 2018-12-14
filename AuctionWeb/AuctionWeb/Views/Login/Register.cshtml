@@ -5,12 +5,15 @@
 @section scripts{
        <script>
            function submit() {
-               var myform = document.getElementById("message");
-               var Username = document.getElementById("Username").value;
-               if (Username == "") {
-                   alert("请输入用户名");
+               if (!check())
+                   return false;
+               var password = document.getElementById("Password").value;
+               var pwd = document.getElementById("pwd").value;
+               if (password != pwd) {
+                   alert("两次输入密码不一致");
                    return false;
                }
+               var myform = document.getElementById("message");
                myform.submit();
            }
        </script>
@@ -19,29 +22,28 @@
 <div class="content">
     <form id="message" action="/Login/Register" method="post">
         <div class="messList">
-            <label>用户名：</label><input type="text" id="Username" name="Username" class="inputWidth" />
+            <label>用户名：</label><input type="text" id="Username" title="请输入用户名" name="Username" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>密码：</label><input type="password" id="Password" name="Password" class="inputWidth" />
+            <label>密码：</label><input type="password" id="Password"  name="Password" class="inputWidth" />
         </div>
         <div class="messList">
             <label>确认密码：</label><input type="password" id="pwd" name="pwd" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>姓名：</label><input type="text" id="TrueName" name="TrueName" class="inputWidth" />
+            <label>姓名：</label><input type="text" id="TrueName" title="请输入姓名" name="TrueName" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>电话：</label><input type="text" id="Telephone" name="Telephone" class="inputWidth" />
+            <label>电话：</label><input type="tel" id="Telephone" name="Telephone" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>身份证号码：</label><input type="text" id="IdNum" name="IdNum" class="inputWidth" />
+            <label>身份证号码：</label><input type="email" id="IdNum" title="请输入身份证号码" name="IdNum" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>联系地址：</label><input type="text" id="Address" name="Address" class="inputWidth" />
-        </div>
-        <div class="mes">
-            <a href="#"  onclick="submit()">提 交</a>
-            <input type="reset" value="重 填">
+            <label>联系地址：</label><input type="text" title="请输入联系地址" id="Address" name="Address" class="inputWidth" />
         </div>
     </form>
+    <div style="margin-right:140px" class="mes">
+        <input type="button" onclick="submit()" value="提 交" />
+    </div>
 </div>

@@ -132,53 +132,54 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AdminPage\AdminBaseController.cs" />
     <Compile Include="Controllers\AdminPage\AdminController.cs" />
     <Compile Include="Controllers\AdminPage\GoodsInfoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\FrontPage\FrontBaseController.cs" />
-    <Compile Include="Controllers\FrontPage\FrontGoodsController.cs" />
+    <Compile Include="Controllers\AdminPage\PowerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Administrators.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Auction.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Auction.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Auction.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Auction.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Auction.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Auction.edmx</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AuctionDetails.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuctionWebEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuctionWebEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuctionWebEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuctionWebEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuctionWebEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DBContextFactory.cs" />
     <Compile Include="Models\Evaluate.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GoodsInfo.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LeaveWord.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\News.cs">
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderInfo.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Purchaser.cs">
-      <DependentUpon>Auction.tt</DependentUpon>
+      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publcie\ValidateCode.cs" />
@@ -517,32 +518,33 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\Verification.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="Models\Auction.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Auction.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Map.html" />
-    <Content Include="Models\Auction.edmx.diagram">
-      <DependentUpon>Auction.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\images\logo.psd" />
     <Content Include="Content\admin\css\font\adminthemes-webfont.eot" />
     <Content Include="Content\admin\css\font\adminthemes-webfont.ttf" />
     <Content Include="Content\admin\css\font\adminthemes-webfont.woff" />
     <Content Include="Content\admin\css\font\adminthemes-webfont.woff2" />
     <Content Include="Content\admin\css\font\adminThemes.ttf" />
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Models\Auction.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Auction.edmx</DependentUpon>
-      <LastGenOutput>Auction.Context.cs</LastGenOutput>
+    <EntityDeploy Include="Models\AuctionWebEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AuctionWebEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AuctionWebEntities.edmx.diagram">
+      <DependentUpon>AuctionWebEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Auction.tt">
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Models\AuctionWebEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Auction.edmx</DependentUpon>
-      <LastGenOutput>Auction.cs</LastGenOutput>
+      <DependentUpon>AuctionWebEntities.edmx</DependentUpon>
+      <LastGenOutput>AuctionWebEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AuctionWebEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AuctionWebEntities.edmx</DependentUpon>
+      <LastGenOutput>AuctionWebEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -583,9 +585,12 @@
     <Content Include="Views\Shared\AdminMaster.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\GoodsInfo\Add.cshtml" />
+    <Content Include="Views\GoodsInfo\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\FrontPage\" />
+    <Folder Include="File\" />
     <Folder Include="Views\AdminBase\" />
   </ItemGroup>
   <ItemGroup>

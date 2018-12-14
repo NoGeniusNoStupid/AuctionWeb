@@ -31,10 +31,12 @@ namespace AuctionWeb.Models
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public string CountDown { get; set; }
-        public Nullable<int> SellerId { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
         public string isSucc { get; set; }
+        public Nullable<int> PurchaserId { get; set; }
+        public Nullable<int> AdminId { get; set; }
     
+        public virtual Administrators Administrators { get; set; }
         public virtual ICollection<AuctionDetails> AuctionDetails { get; set; }
         public virtual Purchaser Purchaser { get; set; }
         public virtual ICollection<OrderInfo> OrderInfo { get; set; }

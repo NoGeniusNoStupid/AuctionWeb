@@ -24,6 +24,7 @@
     <script src="/Content/Admin/js/jquery.js"></script>
     <script src="/Content/Admin/js/verificationNumbers.js"></script>
     <script src="/Content/Admin/js/Particleground.js"></script>
+    <script src="~/Content/Verification.js"></script>
     <script>
         $(document).ready(function () {
             //粒子背景特效
@@ -33,20 +34,21 @@
             });
             //验证码
             createCode();
-            //测试提交，对接程序删除即可
-            $(".submit_btn").click(function () {
-
-                //location.href = "index.html";
-            });
         });
         function submit() {
-            var form = document.getElementById("loginForm");
-            form.submit();
+            if (!check())
+                return false;
+            if (!validate())
+            {
+                return false;
+            }
+            var loginForm = document.getElementById("loginForm");
+            loginForm.submit();
         }
     </script>
 </head>
 <body>
-    <form id="loginForm" method="post" action="/Admin/Index">
+    <form id="loginForm" method="post" action="/Login/AdminLogin" >
         <dl class="admin_login">
             <dt>
                 <strong>网上拍卖后台管理</strong>
@@ -54,20 +56,24 @@
             </dt>
 
             <dd class="user_icon">
-                <input type="text" placeholder="账号" class="login_txtbx" />
+                <input type="text" placeholder="账号"  title="请输入管理员账号" name="Username" class="login_txtbx" />
             </dd>
             <dd class="pwd_icon">
-                <input type="password" placeholder="密码" class="login_txtbx" />
+                <input type="password" placeholder="密码"  name="Password" class="login_txtbx" />
             </dd>
             <dd class="val_icon">
                 <div class="checkcode">
-                    <input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
+                    <input type="text" title="请输入验证码" id="J_codetext" title="" name="VerificationCode" placeholder="验证码" maxlength="4" class="login_txtbx">
                     <canvas class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
                 </div>
                 <input type="button" value="换一张" class="ver_btn" onclick="validate();">
             </dd>
             <dd>
-                <input type="button" value="立即登录" class="submit_btn" onclick="submit()" />
+                <div style="text-align: center; line-height:normal; background: #048f74; font-size: 16px; height: 22px; ">
+                    <a href="#" class="submit_btn" onclick="submit()">立即登录</a>
+                </div>
+               
+               
             </dd>
             <dd>
                 <p>© 2018-2019 俊婷 版权所有</p>

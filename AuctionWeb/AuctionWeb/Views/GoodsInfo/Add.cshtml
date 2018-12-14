@@ -2,17 +2,68 @@
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
+@section scripts{
+   <script>
 
+    function startRead() {
+        var fileDom = document.getElementById("ImagePath");
+        var img = document.getElementById("pic");
+        if (fileDom && img) {
+            flieHandle(fileDom, img)
+        }
+    }
+    function flieHandle(fileDom, img) {
+        //读取计算机文件
+        var file = fileDom.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadstart = function () {
+            console.log('文件上传处理......');
+        };
+        //操作完成
+        reader.onload = function (e) {
+            //flie 对象的属性
+            img.setAttribute('src', reader.result);
+        };
+    }
+
+    function submit() {
+        if (!check())
+            return false;
+        //时间限制
+        if (!CheckTime())
+            return false;
+        //倒计时限制
+        var CountDown = document.getElementById("CountDown");
+        var ival = parseInt(CountDown);
+        if(ival>15)
+        {
+            alert("倒计时时间必须小于15分钟！");
+            return false;
+        }
+        //商品描述
+        var GoodsDescription = document.getElementById("GoodsDescription");
+        if(GoodsDescription.value=="")
+        {
+            alert("商品描述不能为空！");
+            return false;
+        }
+        var addForm = document.getElementById("addForm");
+        addForm.submit();
+    }
+    </script>
+
+    }
 <section>
     <h2><strong style="color:grey;">分列内容布局</strong></h2>
-    <form method="post" action="/GoodsInfo/Add"> 
+    <form id="addForm" method="post" action="/GoodsInfo/Add" enctype="multipart/form-data">
         <ul class="ulColumn2">
             <li>
                 <span class="item_name" style="width:120px;">商品名称：</span>
-                <input type="text" id="GoodsName" name="GoodsName" class="textbox textbox_295" placeholder="商品名称" />
+                <input type="text" id="GoodsName" name="GoodsName" title="请输入商品名称" class="textbox textbox_295" placeholder="商品名称" />
             </li>
             <li>
-                <span class="item_name"  style="width:120px;">商品类型：</span>
+                <span class="item_name" style="width:120px;">商品类型：</span>
                 <select class="select" id="GoodsType" name="GoodsType">
                     <option selected="selected">古董</option>
                     <option>珠宝</option>
@@ -23,8 +74,7 @@
                     <option>文玩</option>
                     <option>其他</option>
                 </select>
-                @*<span class="errorTips">错误提示信息...</span>*@
-            </li> 
+            </li>
             <li>
                 <span class="item_name" style="width:120px;">详细描述：</span>
                 <textarea placeholder="详细描述" id="GoodsDescription" name="GoodsDescription" class="textarea" style="width:500px;height:100px;"></textarea>
@@ -32,44 +82,39 @@
             <li>
                 <span class="item_name" style="width:120px;">上传图片：</span>
                 <label class="uploadImg">
-                    <input type="file" id="ImagePath" name="ImagePath" />
+                    <input type="file" id="ImagePath" name="ImagePath" onchange="startRead()" />
                     <span>上传图片</span>
                 </label>
-                <img src="#" id="pic" />
+                <img width="85" height="85" src="#" id="pic" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">商品数量：</span>
-                <input type="text" id="Num" name="Num" class="textbox textbox_295" placeholder="请输入整数" />
+                <input type="number" title="请输入商品数量" id="Num" name="Num" class="textbox textbox_295" placeholder="请输入整数" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">起拍价格：</span>
-                <input type="text" id="BeginPrice" name="BeginPrice" class="textbox textbox_295" placeholder="请输入数字" />
+                <input type="text" id="BeginPrice" name="BeginPrice" title="请输入起拍价格" class="textbox textbox_295" placeholder="请输入数字" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">竞价阶梯：</span>
-                <input type="text" id="PriceLevel" name="PriceLevel" class="textbox textbox_295" placeholder="请输入数字如：1000" />
+                <input type="text" id="PriceLevel" name="PriceLevel" title="请输入竞价阶梯" class="textbox textbox_295" placeholder="请输入数字如：1000" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">起拍时间：</span>
-                <input type="datetime-local" id="StartTime" name="StartTime" class="textbox textbox_295"  />
+                <input type="datetime-local" title="请输入起拍时间" id="StartTime" name="StartTime" class="textbox textbox_295" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">结束时间：</span>
-                <input type="datetime-local" id="EndTime" name="EndTime" class="textbox textbox_295"  />
+                <input type="datetime-local" title="请输入结束时间" id="EndTime" name="EndTime" class="textbox textbox_295" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">倒计时：</span>
-                <input type="number" id="EndTime" name="EndTime" class="textbox textbox_295" />
+                <input type="number" title="请输入倒计时" id="CountDown" name="CountDown" class="textbox textbox_295" /> &nbsp;分钟
             </li>
-            @*<li>
-                <span class="item_name" style="width:120px;">是否热销：</span>
-                <label class="single_selection"><input type="radio" name="name" />推荐</label>
-                <label class="single_selection"><input type="radio" name="name" />不推荐</label>
-            </li>*@
-           
             <li>
                 <span class="item_name" style="width:120px;"></span>
-                <input type="submit" class="link_btn" />
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+
             </li>
         </ul>
     </form>

@@ -2,18 +2,27 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/FrontMaster.cshtml";
 }
-
+@section scripts{
+    <script>
+        function submit() {
+            if (!check())
+                return false;
+            var message = document.getElementById("message");
+            message.submit();
+        }    
+    </script>
+    }
 <div class="positions"><h1>登陆</h1></div>
 <div class="content">
     <form id="message" action="/Login/Login" method="post">
         <div class="messList">
-            <label>用户名：</label><input type="text" class="inputWidth" />
+            <label>用户名：</label><input type="text" name="UserName" title="请输入用户名" class="inputWidth" />
         </div>
         <div class="messList">
-            <label>密码：</label> <input type="text" class="inputWidth" />
+            <label>密码：</label> <input type="password" name="Password" class="inputWidth" />
         </div>
         <div>
-            <label>验证码：</label><input type="text" class="inputWidth" />
+            <label>验证码：</label><input type="text" title="请输入验证码" name="VerificationCode" class="inputWidth" />
 
             <div style=" margin-left: 5px; margin-top: 10px;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -22,9 +31,10 @@
             </div>
 
         </div>
-        <div class="mes">
-            <input type="submit" value="提 交" />
-            <input type="reset" value="重 填">
-        </div>
+        
     </form>
+    <div class="mes">
+        <input type="button" onclick="submit()" value="提 交" />
+    </div>
+   
 </div>
