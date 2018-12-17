@@ -22,6 +22,8 @@
         <AssociationConnector Association="AuctionWebModel.FK_OrderInfo_GoodsInfo" ManuallyRouted="false" />
         <AssociationConnector Association="AuctionWebModel.FK_leaveWord_Purchaser" ManuallyRouted="false" />
         <AssociationConnector Association="AuctionWebModel.FK_OrderInfo_Purchaser" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AuctionWebModel.CreditRecord" Width="1.5" PointX="8.25" PointY="10.125" />
+        <AssociationConnector Association="AuctionWebModel.FK_CreditRecord_GoodsInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

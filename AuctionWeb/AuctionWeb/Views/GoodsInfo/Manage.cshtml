@@ -10,65 +10,114 @@
     <a href="product_detail.html" class="fr top_rt_btn add_icon">添加商品</a>
 </div>
 <section class="mtb">
-    <select class="select">
-        <option>下拉菜单</option>
-        <option>菜单1</option>
+    <select class="select" name="GoodsType">
+        <option>全部</option>
+        <option>珠宝</option>
+        <option>资产</option>
+        <option>房产</option>
+        <option>汽车</option>
+        <option>奢侈品</option>
+        <option>文玩</option>
+        <option>其他</option>
     </select>
-    <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..." />
-    <input type="button" value="查询" class="group_btn" />
+    <form action="/GoodsInfo/Manage">
+        <input type="text" name="search" class="textbox textbox_225" placeholder="输入藏品关键词..." />
+        <input type="button" value="查询" class="group_btn" />
+    </form>
 </section>
 <table class="table">
     <tr>
         <th>缩略图</th>
-        <th>产品名称</th>
-        <th>货号</th>
-        <th>单价</th>
-        <th>单位</th>
-        <th>精品</th>
-        <th>新品</th>
-        <th>热销</th>
-        <th>库存</th>
+        <th>藏品编号</th>
+        <th>藏品名称</th>
+        <th>藏品类型</th>
+        <th>藏品数量</th>
+        <th>起拍价格</th>
+        <th>竞价阶梯</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>倒计时</th>
+        <th>审核状态</th>
+        <th>审核</th>
         <th>操作</th>
     </tr>
-    <tr>
-        <td class="center"><img src="upload/goods01.jpg" width="50" height="50" /></td>
-        <td>这里是产品名称</td>
-        <td class="center">A15902</td>
-        <td class="center"><strong class="rmb_icon">59.00</strong></td>
-        <td class="center">包</td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center"><a title="否" class="link_icon">&#88;</a></td>
-        <td class="center"><a title="是" class="link_icon">&#89;</td>
-        <td class="center">5559</td>
-        <td class="center">
-            <a href="http://www.mycodes.net" title="预览" class="link_icon" target="_blank">&#118;</a>
-            <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
-            <a href="#" title="删除" class="link_icon">&#100;</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="center"><img src="upload/goods02.jpg" width="50" height="50" /></td>
-        <td>这里是产品名称</td>
-        <td class="center">A15902</td>
-        <td class="center"><strong class="rmb_icon">59.00</strong></td>
-        <td class="center">包</td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center"><a title="否" class="link_icon">&#88;</a></td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center">5559</td>
-        <td class="center">
-            <a href="http://www.mycodes.net" title="预览" class="link_icon" target="_blank">&#118;</a>
-            <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
-            <a href="#" title="删除" class="link_icon">&#100;</a>
-        </td>
-    </tr>
+    @{
+        List<AuctionWeb.Models.GoodsInfo> mlist = (List<AuctionWeb.Models.GoodsInfo>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+                <td class="center"><img src="@item.ImagePath" width="50" height="50" /></td>
+                <td class="center">@item.Id</td>
+                <td>@item.GoodsName</td>
+                <td>@item.GoodsType</td>
+                <td>@item.Num</td>
+
+                <td class="center"><strong class="rmb_icon">@item.BeginPrice</strong></td>
+                <td class="center">@item.PriceLevel</td>
+                <td class="center">@item.StartTime</td>
+                <td class="center">@item.EndTime</td>
+                <td class="center">@item.CountDown</td>
+                <td class="center">@item.isSucc</td>
+                @*<td class="center"><a title="是" class="link_icon">&#89;</a></td>
+                    <td class="center"><a title="否" class="link_icon">&#88;</a></td>
+                    <td class="center"><a title="是" class="link_icon">&#89;</td>
+                    <td class="center">5559</td>*@
+                <td class="center">
+                    @if (item.isSucc == "待审核")
+                    {
+                        <a href="/GoodsInfo/Agree/@item.Id" title="通过" class="link_icon">通过</a>
+                        <a href="/GoodsInfo/Refuse/@item.Id" title="拒绝" class="link_icon">拒绝</a>
+                    }
+                    else 
+                    {
+                        <a href="/GoodsInfo/Revoke/@item.Id" title="撤销" class="link_icon">撤销</a>
+                    }
+                </td>
+                <td class="center">
+                    @if(item.Status!="成功")
+                    { 
+                      <a href="/GoodsInfo/Edit/@item.Id" title="编辑" class="link_icon">&#101;</a>
+                    }
+                    <a href="/GoodsInfo/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
+                </td>
+            </tr>
+        }
+    }
+
+    @*<tr>
+            <td class="center"><img src="upload/goods01.jpg" width="50" height="50" /></td>
+            <td>这里是藏品名称</td>
+            <td class="center">A15902</td>
+            <td class="center"><strong class="rmb_icon">59.00</strong></td>
+            <td class="center">包</td>
+            <td class="center"><a title="是" class="link_icon">&#89;</a></td>
+            <td class="center"><a title="否" class="link_icon">&#88;</a></td>
+            <td class="center"><a title="是" class="link_icon">&#89;</td>
+            <td class="center">5559</td>
+            <td class="center">
+                <a href="http://www.mycodes.net" title="预览" class="link_icon" target="_blank">&#118;</a>
+                <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
+                <a href="#" title="删除" class="link_icon">&#100;</a>
+            </td>
+        </tr>*@
+    @*<tr>
+            <td class="center"><img src="upload/goods02.jpg" width="50" height="50" /></td>
+            <td>这里是藏品名称</td>
+            <td class="center">A15902</td>
+            <td class="center"><strong class="rmb_icon">59.00</strong></td>
+            <td class="center">包</td>
+            <td class="center"><a title="是" class="link_icon">&#89;</a></td>
+            <td class="center"><a title="否" class="link_icon">&#88;</a></td>
+            <td class="center"><a title="是" class="link_icon">&#89;</a></td>
+            <td class="center">5559</td>
+            <td class="center">
+                <a href="http://www.mycodes.net" title="预览" class="link_icon" target="_blank">&#118;</a>
+                <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
+                <a href="#" title="删除" class="link_icon">&#100;</a>
+            </td>
+        </tr>*@
 </table>
 <aside class="paging">
-    <a>第一页</a>
-    <a>1</a>
-    <a>2</a>
-    <a>3</a>
-    <a>…</a>
-    <a>1004</a>
-    <a>最后一页</a>
+    @Html.Raw(ViewData["PageBar"])
+
 </aside>

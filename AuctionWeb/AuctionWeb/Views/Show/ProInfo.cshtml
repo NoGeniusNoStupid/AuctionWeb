@@ -1,0 +1,115 @@
+﻿@model AuctionWeb.Models.GoodsInfo
+@{
+    ViewBag.Title = "ProInfo";
+    Layout = "~/Views/Shared/FrontMaster.cshtml";
+}
+@section scripts{
+<script>
+    window.onload = function () {
+        var demo = document.getElementById("demo");
+
+        var endTime = document.getElementById("EndTime").value;//结束时间
+        //时间日期转换
+        var timestamp = Date.parse(endTime);
+        endTime = new Date(timestamp);
+
+        var t1 = setInterval(clock, 1000); // 开启定时器
+        function clock() {
+            var nowTime = new Date(); // 一定是要获取最新的时间
+            if (endTime < nowTime) {
+                //去掉定时器的方法
+                window.clearInterval(t1);
+                demo.innerHTML = "倒计时结束";
+                return;
+            }
+            var second = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
+            var s = parseInt(second); // 当前的秒
+
+            console.log(s);
+            demo.innerHTML = s + "秒";
+        }
+
+        var OutTime = new Date(); // 一定是要获取最新的时间
+        var Outsecond = parseInt((endTime.getTime() - OutTime.getTime()));
+        if (endTime > OutTime) {
+            setTimeout(OutClock, Outsecond)
+            function OutClock() {
+                //异步去实现，重新加载页面即可。
+                alert("时间到！");
+            }
+        }
+    }
+</script>
+}
+
+<div class="positions"><h1>详情</h1></div>
+<div class="content" >
+    <h1>@Model.GoodsName</h1>
+    @*<div id="zw">作者：管理员 发表时间：2013-08-14 23:50:23 </div>*@
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="one">
+                        <div class="jqzoom">
+                            <img src="@Model.ImagePath" width="375" height="285" />
+                        </div>
+                    </div>
+                </td>
+                <td class="pros" valign="top">
+                    <p><strong>藏品名称：@Model.GoodsName</strong></p>
+                    <p><strong>藏品类型：@Model.GoodsType </strong></p>
+                    <p><strong>起拍价格：@Model.BeginPrice 元</strong></p>
+                    <p><strong>竞价阶梯：@Model.PriceLevel 元</strong></p>
+                    <p><strong>起拍时间：@Model.StartTime </strong></p>
+                    <p><strong>结束时间：@Model.EndTime</strong></p>
+                    <p><strong>藏品介绍：@Model.GoodsDescription </strong></p>
+
+                    <br />
+                    <p><strong style="color:red">当前价格：@Model.CurrentPrice </strong></p>
+                    <p><strong>当前状态：@Model.Status </strong></p>
+                  
+                    @{
+                        //计算倒计时时间
+                        if (Model.AuctionDetails == null || Model.AuctionDetails.Count <= 0)
+                        {
+                            <p><strong>倒计时：<label id="CountDown">@(Convert.ToInt32(Model.CountDown) * 60)</label> 秒</strong></p>
+                        }
+                        else
+                        {
+                              <p><strong>倒计时：<label id="demo"></label></strong></p>
+                        }
+                    }
+                
+                    <input type="hidden" id="EndTime" value="@Model.CountDownTime" />
+
+                    <p><strong>*第一位竞拍者竞价成功，开始倒计时！</strong></p>
+                    <p><strong>*倒计时结束，视为无人竞价，拍卖成功！</strong></p>
+                    <p>
+                        @{
+                            if (Model.Status == "进行中")
+                            {
+                                if ( ViewData["CreditRecord"] == "否")
+                                {
+                                    //缴纳保证金
+                                    <a href="/Show/CreditPrice/@Model.Id" style="float: right; width: 100px; height: 35px; background-color: red; color: black; text-align: center; ">缴纳保证金</a>
+                                }
+                                else
+                                {
+                                    <a href="/Show/Aution/@Model.Id" style="float:left;width:100px;height:35px;background-color:red;color:black;text-align:center" onclick="return confirm('是否竞拍该商品？')">我要竞拍</a>
+                            
+                                    <a href="/Show/AutionDetail/@Model.Id" style="float:right;width:100px;height:35px;background-color:red;color:black;text-align:center" >竞拍记录</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="/Show/AutionDetail/@Model.Id" style="float:right;width:100px;height:35px;background-color:red;color:black;text-align:center" >竞拍记录</a>
+                            }
+                        }
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   
+</div><!--content/-->

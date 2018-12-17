@@ -5,57 +5,24 @@
 
 <div class="positions"><h1>在线预展</h1></div>
 <div class="content" id="show">
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c1.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c2.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c3.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c4.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c5.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c6.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c7.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c8.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c9.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c10.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c11.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
-    <dl>
-        <dt><a href="proinfo.html"><img src="/Content/images/c12.jpg" /></a></dt>
-        <dd><a href="proinfo.html">古玩名称</a></dd>
-    </dl>
+    @{
+        List<AuctionWeb.Models.GoodsInfo> mlist = (List<AuctionWeb.Models.GoodsInfo>)ViewData["List"];
+       
+        foreach (var item in mlist)
+        {
+            <dl>
+                <dt><a href="/Show/ProInfo/@item.Id"><img src="@item.ImagePath" /></a></dt>
+                <dd><a href="/Show/ProInfo/@item.Id">@item.GoodsName</a>
+                【@item.Status】
+                </dd>
+            </dl>
+        }
+    }
     <div class="clear"></div>
 </div><!--content/-->
 
 <p>
-    <div class="yahoo2"><span class="disabled">&lt; Prev</span><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a><a href="#?page=4">4</a><a href="#?page=5">5</a><a href="#?page=6">6</a><a href="#?page=7">7</a>...<a href="#?page=199">199</a><a href="#?page=200">200</a><a href="#?page=2">Next &gt;</a></div>
+    <div class="yahoo2">
+        @Html.Raw(ViewData["PageBar"])
+    </div>
 </p>

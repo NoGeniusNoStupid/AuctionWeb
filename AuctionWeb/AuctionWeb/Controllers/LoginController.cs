@@ -67,7 +67,7 @@ namespace AuctionWeb.Controllers
                 return RedirectDialogToAction("该用户名已经存在！", true);
             }
             purchaser.RegTime = DateTime.Now;
-            purchaser.CreditValue = "良好";
+            purchaser.CreditValue = "0";
             purchaser.State = "正常";
             DB.Purchaser.Add(purchaser);
             DB.SaveChanges();

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AuctionWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="AuctionWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="Administrators">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,6 +22,18 @@
           <Property Name="GoodsId" Type="int" />
           <Property Name="PurchaserId" Type="int" />
           <Property Name="TempPrice" Type="varchar" MaxLength="50" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CreditRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodsId" Type="int" />
+          <Property Name="PurchaserId" Type="int" />
+          <Property Name="PayType" Type="varchar" MaxLength="50" />
+          <Property Name="CreditPrice" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="AddTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Evaluate">
@@ -53,6 +65,9 @@
           <Property Name="isSucc" Type="varchar" MaxLength="50" />
           <Property Name="PurchaserId" Type="int" />
           <Property Name="AdminId" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentPrice" Type="varchar" MaxLength="50" />
+          <Property Name="CountDownTime" Type="datetime" />
         </EntityType>
         <EntityType Name="LeaveWord">
           <Key>
@@ -125,6 +140,18 @@
             </Principal>
             <Dependent Role="AuctionDetails">
               <PropertyRef Name="PurchaserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditRecord_GoodsInfo">
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1" />
+          <End Role="CreditRecord" Type="Self.CreditRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodsInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditRecord">
+              <PropertyRef Name="GoodsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -217,6 +244,7 @@
         <EntityContainer Name="AuctionWebModelStoreContainer">
           <EntitySet Name="Administrators" EntityType="Self.Administrators" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AuctionDetails" EntityType="Self.AuctionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditRecord" EntityType="Self.CreditRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evaluate" EntityType="Self.Evaluate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodsInfo" EntityType="Self.GoodsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveWord" EntityType="Self.LeaveWord" Schema="dbo" store:Type="Tables" />
@@ -230,6 +258,10 @@
           <AssociationSet Name="FK_AuctionDetails_Purchaser" Association="Self.FK_AuctionDetails_Purchaser">
             <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="AuctionDetails" EntitySet="AuctionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditRecord_GoodsInfo" Association="Self.FK_CreditRecord_GoodsInfo">
+            <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+            <End Role="CreditRecord" EntitySet="CreditRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_Evaluate_Evaluate" Association="Self.FK_Evaluate_Evaluate">
             <End Role="OrderInfo" EntitySet="OrderInfo" />
@@ -260,8 +292,7 @@
             <End Role="OrderInfo" EntitySet="OrderInfo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AuctionWebModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -322,6 +353,10 @@
           <NavigationProperty Name="AuctionDetails" Relationship="Self.FK_AuctionDetails_GoodsInfo" FromRole="GoodsInfo" ToRole="AuctionDetails" />
           <NavigationProperty Name="Purchaser" Relationship="Self.FK_GoodsInfo_Purchaser" FromRole="GoodsInfo" ToRole="Purchaser" />
           <NavigationProperty Name="OrderInfo" Relationship="Self.FK_OrderInfo_GoodsInfo" FromRole="GoodsInfo" ToRole="OrderInfo" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CountDownTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CreditRecord" Relationship="AuctionWebModel.FK_CreditRecord_GoodsInfo" FromRole="GoodsInfo" ToRole="CreditRecord" />
         </EntityType>
         <EntityType Name="LeaveWord">
           <Key>
@@ -537,7 +572,37 @@
             <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="OrderInfo" EntitySet="OrderInfo" />
           </AssociationSet>
+          <EntitySet Name="CreditRecord" EntityType="AuctionWebModel.CreditRecord" />
+          <AssociationSet Name="FK_CreditRecord_GoodsInfo" Association="AuctionWebModel.FK_CreditRecord_GoodsInfo">
+            <End Role="GoodsInfo" EntitySet="GoodsInfo" />
+            <End Role="CreditRecord" EntitySet="CreditRecord" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CreditRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodsId" Type="Int32" />
+          <Property Name="PurchaserId" Type="Int32" />
+          <Property Name="CreditPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GoodsInfo" Relationship="AuctionWebModel.FK_CreditRecord_GoodsInfo" FromRole="CreditRecord" ToRole="GoodsInfo" />
+          <Property Name="PayType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_CreditRecord_GoodsInfo">
+          <End Type="AuctionWebModel.GoodsInfo" Role="GoodsInfo" Multiplicity="0..1" />
+          <End Type="AuctionWebModel.CreditRecord" Role="CreditRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodsInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditRecord">
+              <PropertyRef Name="GoodsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -579,6 +644,9 @@
           <EntitySetMapping Name="GoodsInfo">
             <EntityTypeMapping TypeName="AuctionWebModel.GoodsInfo">
               <MappingFragment StoreEntitySet="GoodsInfo">
+                <ScalarProperty Name="CountDownTime" ColumnName="CountDownTime" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GoodsName" ColumnName="GoodsName" />
                 <ScalarProperty Name="GoodsType" ColumnName="GoodsType" />
@@ -648,6 +716,19 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="CreditValue" ColumnName="CreditValue" />
                 <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditRecord">
+            <EntityTypeMapping TypeName="AuctionWebModel.CreditRecord">
+              <MappingFragment StoreEntitySet="CreditRecord">
+                <ScalarProperty Name="PayType" ColumnName="PayType" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreditPrice" ColumnName="CreditPrice" />
+                <ScalarProperty Name="PurchaserId" ColumnName="PurchaserId" />
+                <ScalarProperty Name="GoodsId" ColumnName="GoodsId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

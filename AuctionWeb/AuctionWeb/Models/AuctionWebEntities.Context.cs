@@ -33,5 +33,6 @@ namespace AuctionWeb.Models
         public DbSet<News> News { get; set; }
         public DbSet<OrderInfo> OrderInfo { get; set; }
         public DbSet<Purchaser> Purchaser { get; set; }
+        public DbSet<CreditRecord> CreditRecord { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AuctionWeb.Models;
+using AuctionWeb.Publcie;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,80 @@ namespace AuctionWeb.Controllers.AdminPage
             }
         }
 
-        public ActionResult Manage()
+        #region 管理
+        public ActionResult Manage(string search, string GoodsType)
         {
+            //初始化物品状态
+            GoodsInfoHelp.GoodsInfoInit();
+
+            //分页设置
+            int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
+            int pageSize = 5;//页面记录数
+            List<GoodsInfo> mlist = new List<GoodsInfo>();
+            //查询记录
+            if (string.IsNullOrEmpty(search))
+            {
+                mlist = DB.GoodsInfo.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+            }
+            else
+            {
+                if (GoodsType == "全部")
+                   mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                else
+                   mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search) && a.GoodsType == GoodsType).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+            }
+            int listCount = DB.GoodsInfo.Where(a => true).Count();
+            //生成导航条
+            string strBar = ManagePageBar.GetPageBar(pageIndex, listCount, pageSize);
+
+            ViewData["List"] = mlist;
+            ViewData["PageBar"] = strBar;
+
             return View();
         }
+        //同意
+        public ActionResult Agree(int id)
+        {
 
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+            Info.isSucc = "通过";
+            //更新操作
+            DB.Entry(Info).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        //拒绝
+        public ActionResult Refuse(int id)
+        {
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+            Info.isSucc = "拒绝";
+            //更新操作
+            DB.Entry(Info).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        //撤销
+        public ActionResult Revoke(int id)
+        {
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+            Info.isSucc = "待审核";
+            //更新操作
+            DB.Entry(Info).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        //删除
+        public ActionResult Delete(int id)
+        {
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+            //删除操作
+            DB.Entry(Info).State = System.Data.EntityState.Deleted;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        #endregion
+
+        #region 添加
         public ActionResult Add()
         {
             return View();
@@ -44,12 +114,38 @@ namespace AuctionWeb.Controllers.AdminPage
             if (Session["AdminId"] != null)
                 goodsInfo.AdminId = Convert.ToInt32(Session["AdminId"]);
             goodsInfo.isSucc = "待审核";
-
+            goodsInfo.Status = "未开始";
+            goodsInfo.CurrentPrice = goodsInfo.BeginPrice;
             DB.GoodsInfo.Add(goodsInfo);
             DB.SaveChanges();
             return RedirectToAction("Manage");
         }
+        #endregion
 
+        #region 编辑
+        public ActionResult Edit(int id)
+        {
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+           
+            return View(Info);
+        }
+        [HttpPost]
+        public ActionResult Edit(GoodsInfo goodsInfo, string oldPic)
+        {
+            //上传图片
+            if (Request.Files.Count > 0)
+            {
+                goodsInfo.ImagePath = SaveImage(Request.Files["ImagePath"]);
+            }
+            if (string.IsNullOrEmpty(goodsInfo.ImagePath))
+                goodsInfo.ImagePath = oldPic;
+
+            goodsInfo.isSucc = "待审核";
+            DB.Entry(goodsInfo).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        #endregion
 
         /// <summary>
         /// 保存图片

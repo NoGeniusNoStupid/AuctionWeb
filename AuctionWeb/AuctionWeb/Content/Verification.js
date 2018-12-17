@@ -47,6 +47,50 @@
     
     return true;
 }
+
+
+function editCheck() {
+    var inputList = document.getElementsByTagName("INPUT");
+    for (var i = 0; i < inputList.length; i++) {
+        if (inputList[i].type == "password") {
+            var date = inputList[i].value;
+            if (date.length < 6 || date.length > 10) {
+                alert("请输入6-10位密码");
+                return false;
+            }
+        }
+        if (inputList[i].type == "tel") {
+            var date = inputList[i].value;
+            if (!validatemobile(date)) {
+                return false;
+            }
+        }
+        if (inputList[i].type == "email") {
+            var date = inputList[i].value;
+            if (!isCardNo(date)) {
+                return false;
+            }
+        }
+        if (inputList[i].type == "text" || inputList[i].type == "number" || inputList[i].type == "datetime-local"
+            || inputList[i].type == "date") {
+            var date = inputList[i].value;
+            if (date == "") {
+                alert(inputList[i].title);
+                return false;
+            }
+        }
+        if (inputList[i].type == "number") {
+            var date = inputList[i].value;
+            var ival = parseInt(date);
+            if (ival <= 0) {
+                alert("输入的数字不能小于0");
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 //邮箱校验
 function CheckEmail(obj) {
     //对电子邮件的验证

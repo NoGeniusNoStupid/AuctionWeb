@@ -18,6 +18,7 @@ namespace AuctionWeb.Models
         {
             this.AuctionDetails = new HashSet<AuctionDetails>();
             this.OrderInfo = new HashSet<OrderInfo>();
+            this.CreditRecord = new HashSet<CreditRecord>();
         }
     
         public int Id { get; set; }
@@ -35,10 +36,14 @@ namespace AuctionWeb.Models
         public string isSucc { get; set; }
         public Nullable<int> PurchaserId { get; set; }
         public Nullable<int> AdminId { get; set; }
+        public string Status { get; set; }
+        public string CurrentPrice { get; set; }
+        public Nullable<System.DateTime> CountDownTime { get; set; }
     
         public virtual Administrators Administrators { get; set; }
         public virtual ICollection<AuctionDetails> AuctionDetails { get; set; }
         public virtual Purchaser Purchaser { get; set; }
         public virtual ICollection<OrderInfo> OrderInfo { get; set; }
+        public virtual ICollection<CreditRecord> CreditRecord { get; set; }
     }
 }

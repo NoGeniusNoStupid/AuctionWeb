@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "AutionDetail";
+    Layout = "~/Views/Shared/FrontMaster.cshtml";
+}
+
+<div class="positions"><h1>竞拍详情</h1></div>
+<div class="content" id="show">
+
+    <div>
+
+        <table width="600px">
+            <tr>
+                <th>编号</th>
+                <th>竞拍人</th>
+                <th>当前价格</th>
+                <th>竞拍时间</th>
+            </tr>
+            @{
+                List<AuctionWeb.Models.AuctionDetails> mlist = (List<AuctionWeb.Models.AuctionDetails>)ViewData["List"];
+                foreach (var item in mlist)
+                {
+                    <tr>
+                        <td width="15%" align="center">@item.Id</td>
+                        <td width="30%" align="center">@item.Purchaser.Username</td>
+                        <td width="25%" align="center">@item.TempPrice</td>
+                        <td width="30%" align="center">@item.AddTime</td>
+                    </tr>
+                }
+            }
+        </table>
+
+    </div>
+   
+    <div class="clear"><a href="javascript:self.location=document.referrer;" style="float:right">返回上级</a></div>
+</div><!--content/-->
+
+<p>
+    <div class="yahoo2">
+        @Html.Raw(ViewData["PageBar"])
+    </div>
+</p>

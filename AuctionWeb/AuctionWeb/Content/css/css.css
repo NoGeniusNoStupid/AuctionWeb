@@ -82,7 +82,7 @@ ul{list-style:none;}
 
 
 
-/*首页图片滚动--产品*/
+/*首页图片滚动--藏品*/
 .scrolllist a.abtn{display:block;height:190px;width:17px;overflow:hidden;background:url(../images/arrow3.png) no-repeat 0px 50%;}
 .scrolllist a.aleft{float:left;}
 .scrolllist a.agrayleft{cursor:default;background-position:-34px 50%;}

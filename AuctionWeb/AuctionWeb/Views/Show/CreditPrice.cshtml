@@ -1,0 +1,38 @@
+﻿@model AuctionWeb.Models.GoodsInfo
+@{
+    ViewBag.Title = "CreditPrice";
+    Layout = "~/Views/Shared/FrontMaster.cshtml";
+}
+<div class="positions">
+    <h1>保证金缴纳</h1>
+</div>
+<div class="content">
+    <div>
+        <p><strong>藏品名称：@Model.GoodsName</strong></p>
+        <p><strong>起拍价格：@Model.BeginPrice 元</strong></p>
+        <p><strong>保证金额：@(Convert.ToDouble(Model.BeginPrice) * 0.2) 元</strong></p>
+        <p><strong>支付方式：</strong></p>
+        
+    </div>
+
+    <form method="post" action="/Show/PostCreditPrice" >
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <table>
+            <tr>
+               
+                <td><img src="/Content/images/支付宝.jpg" width="300" height="100" /></td>
+                <td><img src="/Content/images/微信.jpg" width="300" height="100" /></td>
+            </tr>
+            <tr>
+                <td><input type="radio" value="支付宝支付" name="payType" checked="checked" /></td>
+                <td><input type="radio" value="微信支付" name="payType" /></td>
+            </tr>
+        </table>
+        <button style="float:right;width:100px;height:35px;background-color:red;color:black;text-align:center" type="submit" onclick="return confirm('确定该藏品的缴纳保证金！竞拍结束后退还。')">缴纳</button>
+    </form>
+   
+    @*<p>
+        <a href="/Show/PostCreditPrice/@Model.Id" onclick="return confirm('确定该藏品的缴纳保证金！竞拍结束后退还。')" style="float:right;width:100px;height:35px;background-color:red;color:black;text-align:center">缴纳</a>
+    </p>*@
+</div>
