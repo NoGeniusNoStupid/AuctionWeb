@@ -28,14 +28,19 @@
             console.log(s);
             demo.innerHTML = s + "秒";
         }
-
+        var t2 = setInterval(eventClock, 5000); // 开启定时器
+        function eventClock() {
+            alert("刷新！");
+            document.execCommand("Refresh");
+        }
         var OutTime = new Date(); // 一定是要获取最新的时间
         var Outsecond = parseInt((endTime.getTime() - OutTime.getTime()));
         if (endTime > OutTime) {
             setTimeout(OutClock, Outsecond)
             function OutClock() {
-                //异步去实现，重新加载页面即可。
-                alert("时间到！");
+                location.reload();
+                alert("竞拍结束！");
+                document.execCommand("Refresh");          
             }
         }
     }
@@ -57,6 +62,7 @@
                     </div>
                 </td>
                 <td class="pros" valign="top">
+                    <input type="hidden" value="@Model.Id" id="Id" />
                     <p><strong>藏品名称：@Model.GoodsName</strong></p>
                     <p><strong>藏品类型：@Model.GoodsType </strong></p>
                     <p><strong>起拍价格：@Model.BeginPrice 元</strong></p>

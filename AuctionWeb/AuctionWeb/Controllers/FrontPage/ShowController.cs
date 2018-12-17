@@ -28,9 +28,6 @@ namespace AuctionWeb.Controllers
             return View(GoodsInfo);
         }    
 
-
-
-
         //我要竞拍
         public ActionResult Aution(int id)
         {
@@ -79,11 +76,10 @@ namespace AuctionWeb.Controllers
 
             return View();
         }
-        /// <summary>
-        /// 添加竞拍记录
-        /// </summary>
-        /// <param name="purId"></param>
-        /// <param name="GoodsInfo"></param>
+
+      
+
+        //添加竞拍信息
         private void AddAuctionDetail(int purId, Models.GoodsInfo GoodsInfo)
         {
             AuctionDetails auctionDetails = new AuctionDetails();
@@ -95,7 +91,7 @@ namespace AuctionWeb.Controllers
 
 
             //更新货物记录
-            GoodsInfo.CountDownTime = DateTime.Now.AddMinutes(Convert.ToDouble(GoodsInfo.CountDownTime));
+            GoodsInfo.CountDownTime = DateTime.Now.AddMinutes(Convert.ToDouble(GoodsInfo.CountDown));
             GoodsInfo.CurrentPrice = auctionDetails.TempPrice;
             DB.Entry(GoodsInfo).State = EntityState.Modified;
 

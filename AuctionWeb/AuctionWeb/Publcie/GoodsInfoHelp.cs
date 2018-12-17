@@ -45,6 +45,15 @@ namespace AuctionWeb.Publcie
                 if (dt > item.StartTime && dt < item.EndTime)
                 {
                     state = "进行中";
+
+                    //如何倒计时到了，还没人竞拍，视为竞价成功。
+                    if(item.AuctionDetails!=null&&item.AuctionDetails.Count>0)
+                    {
+                        if (item.CountDownTime < DateTime.Now)
+                        {
+                            state = "成功";
+                        }
+                    }
                 }
                 item.Status = state;
 
