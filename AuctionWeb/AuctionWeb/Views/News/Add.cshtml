@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+<script>
+        function submit() {
+            var content = ue.getContent();
+            if (content == "") {
+                alert("请输入新闻内容");
+                return false;
+            }
+            if (!check())
+                return false;
+            
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">分列内容布局</strong></h2>
+    <form id="addForm" method="post" action="/News/Add" enctype="multipart/form-data">
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">新闻标题：</span>
+                <input type="text" id="Title" name="Title" title="请输入新闻标题" class="textbox textbox_295" placeholder="新闻标题" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">作者：</span>
+                <input type="text" id="Author" name="Author" title="请输入作者" class="textbox textbox_295" placeholder="作者" />
+            </li>
+
+            <li>
+                <span class="item_name" style="width:120px;">新闻内容：</span>
+                <div style="width:900px;margin-left:auto;margin-right:auto">
+                    <br />
+                    <script id="container" name="Content" type="text/plain" style="width:800px;height:300px;">
+                    </script>
+
+                    <!-- 配置文件 -->
+                    <script src="~/Content/utf8-asp/ueditor.config.js"></script>
+                    <!-- 编辑器源码文件 -->
+                    <script src="~/Content/utf8-asp/ueditor.all.js"></script>
+                    <!-- 实例化编辑器 -->
+                    <script type="text/javascript">
+                        var ue = UE.getEditor('container');
+                    </script>
+                </div>
+            </li>
+
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

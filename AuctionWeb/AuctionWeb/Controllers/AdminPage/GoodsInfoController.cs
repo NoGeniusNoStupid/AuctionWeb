@@ -154,7 +154,7 @@ namespace AuctionWeb.Controllers.AdminPage
         /// <returns>获取保存的路径</returns>
         public string SaveImage(HttpPostedFileBase postFile)
         {
-            string result = "";
+           
             HttpPostedFileBase imageName = postFile;// 从前台获取文件
             string file = imageName.FileName;
             string fileFormat = file.Split('.')[file.Split('.').Length - 1]; // 以“.”截取，获取“.”后面的文件后缀

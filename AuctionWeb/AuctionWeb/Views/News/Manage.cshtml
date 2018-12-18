@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">新闻列表</h2>
+</div>
+<section class="mtb">
+    <form action="/News/Manage">
+        <input type="text" name="search" class="textbox textbox_225" placeholder="根据标题搜索" />
+        <input type="button" value="查询" class="group_btn" />
+    </form>
+</section>
+<table class="table">
+    <tr>
+        <th>新闻编号</th>
+        <th>新闻标题</th>
+        <th>作者</th>
+        <th>点击量</th>
+        <th>添加时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.News> mlist = (List<AuctionWeb.Models.News>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+
+                <td class="center">@item.Id</td>
+                <td class="center">@item.Title</td>
+                <td class="center">@item.Author</td>
+                <td class="center">@item.ClickNum</td>
+                <td class="center">@item.AddTime</td>
+
+                <td class="center">
+                    <a href="/News/Edit/@item.Id"  title="编辑" class="link_icon">编辑</a>
+                    <a href="/News/Delete/@item.Id" onclick="return confirm('确定要删除吗？')" title="删除" class="link_icon">删除</a>
+                </td>
+
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>

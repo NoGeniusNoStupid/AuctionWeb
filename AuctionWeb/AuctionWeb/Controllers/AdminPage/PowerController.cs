@@ -14,7 +14,7 @@ namespace AuctionWeb.Controllers
             if (Session["AdminId"] == null)
             {
                 string msg = "请先登录，再进行操作！";
-                filterContext.Result = RedirectDialogToAction("Login", "AdminLogin", msg);
+                filterContext.Result = RedirectDialogToAction("AdminLogin", "Login", msg);
             }
         }
     }

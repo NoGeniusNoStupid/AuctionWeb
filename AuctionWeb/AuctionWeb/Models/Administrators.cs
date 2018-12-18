@@ -17,7 +17,6 @@ namespace AuctionWeb.Models
         public Administrators()
         {
             this.GoodsInfo = new HashSet<GoodsInfo>();
-            this.News = new HashSet<News>();
         }
     
         public int Id { get; set; }
@@ -26,6 +25,5 @@ namespace AuctionWeb.Models
         public Nullable<System.DateTime> AddTime { get; set; }
     
         public virtual ICollection<GoodsInfo> GoodsInfo { get; set; }
-        public virtual ICollection<News> News { get; set; }
     }
 }

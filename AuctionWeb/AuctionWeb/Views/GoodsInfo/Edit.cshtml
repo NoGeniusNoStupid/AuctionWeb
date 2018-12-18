@@ -41,10 +41,10 @@
                 alert("倒计时时间必须小于15分钟！");
                 return false;
             }
-            //商品描述
+            //藏品描述
             var GoodsDescription = document.getElementById("GoodsDescription");
             if (GoodsDescription.value == "") {
-                alert("商品描述不能为空！");
+                alert("藏品描述不能为空！");
                 return false;
             }
             var addForm = document.getElementById("addForm");
@@ -66,11 +66,11 @@
                 <input type="hidden" name="PurchaserId" value="@Model.PurchaserId" />
                 <input type="hidden" name="CurrentPrice" value="@Model.CurrentPrice" />
                 <input type="hidden" name="Status" value="@Model.Status" />
-                <span class="item_name" style="width:120px;">商品名称：</span>
-                <input type="text" id="GoodsName" value="@Model.GoodsName" name="GoodsName" title="请输入商品名称" class="textbox textbox_295" placeholder="商品名称" />
+                <span class="item_name" style="width:120px;">藏品名称：</span>
+                <input type="text" id="GoodsName" value="@Model.GoodsName" name="GoodsName" title="请输入藏品名称" class="textbox textbox_295" placeholder="藏品名称" />
             </li>
             <li>
-                <span class="item_name" style="width:120px;">商品类型：</span>
+                <span class="item_name" style="width:120px;">藏品类型：</span>
                 <select class="select" id="GoodsType" name="GoodsType">
                     <option selected="selected">@Model.GoodsType</option>
                     <option>古董</option>
@@ -99,8 +99,8 @@
                 <input type="hidden" name="oldPic" value="@Model.ImagePath" />
             </li>
             <li>
-                <span class="item_name" style="width:120px;">商品数量：</span>
-                <input type="number" title="请输入商品数量" id="Num" name="Num" value="@Model.Num" class="textbox textbox_295" placeholder="请输入整数" />
+                <span class="item_name" style="width:120px;">藏品数量：</span>
+                <input type="number" title="请输入藏品数量" id="Num" name="Num" value="@Model.Num" class="textbox textbox_295" placeholder="请输入整数" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">起拍价格：</span>

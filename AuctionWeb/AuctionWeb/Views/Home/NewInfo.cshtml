@@ -1,0 +1,22 @@
+﻿@model AuctionWeb.Models.News
+@{
+    ViewBag.Title = "NewInfo";
+    Layout = "~/Views/Shared/FrontMaster.cshtml";
+}
+
+<h2>NewInfo</h2>
+<div class="positions"><h1>新闻详情</h1></div>
+<div class="content">
+    <h1>@Model.Title</h1>
+    <div id="zw">作者：@Model.Author 发表时间：@Model.AddTime 阅读： <span id="visit">@Model.ClickNum</span> 次</div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.Raw(Model.Content)
+                 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div><!--content/-->

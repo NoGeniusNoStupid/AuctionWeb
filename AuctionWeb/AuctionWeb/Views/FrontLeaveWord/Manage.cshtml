@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">留言列表</h2>
+</div>
+<section class="mtb">
+    <form action="/FrontLeave/Manage">
+        <input type="text" name="search" class="textbox textbox_225" placeholder="根据留言内容搜索" />
+        <input type="button" value="查询" class="group_btn" />
+    </form>
+</section>
+<table class="table">
+    <tr>
+        <th>留言编号</th>
+        <th>留言内容</th>
+        <th>留言者编号</th>
+        <th>姓名</th>
+        <th>联系方式</th>
+        <th>状态</th>
+        <th>留言时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.LeaveWord> mlist = (List<AuctionWeb.Models.LeaveWord>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+
+                <td class="center">@item.Id</td>
+                <td class="center">@item.LContent</td>
+                <td class="center">@item.Purchaser.Id</td>
+                <td class="center">@item.Purchaser.TrueName</td>
+                <td class="center">@item.LTel</td>
+                <td class="center">@item.Status</td>
+                <td class="center">@item.AddTime</td>
+
+                <td class="center">
+                    @if (Session["AdminId"] != null && item.Status == "未读")
+                    {
+                            <a href="/FrontLeaveWord/Read/@item.Id" title="已读" class="link_icon">已读</a>
+                    }
+                    <a href="/FrontLeaveWord/Delete/@item.Id" onclick="return confirm('确定要删除吗？')" title="删除" class="link_icon">删除</a>
+                </td>
+
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>
+

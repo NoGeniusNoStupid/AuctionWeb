@@ -16,11 +16,9 @@ namespace AuctionWeb.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public Nullable<int> AdminId { get; set; }
         public string Author { get; set; }
         public Nullable<int> ClickNum { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
-    
-        public virtual Administrators Administrators { get; set; }
+        public string Content { get; set; }
     }
 }

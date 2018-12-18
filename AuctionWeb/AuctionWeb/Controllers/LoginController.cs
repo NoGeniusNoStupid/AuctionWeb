@@ -40,6 +40,7 @@ namespace AuctionWeb.Controllers
         public ActionResult Out()
         {
             Session["PurId"] = null;
+            Session["Role"] = null;
             return RedirectToAction("Index", "Home");
         }
         //获取验证码
@@ -81,12 +82,15 @@ namespace AuctionWeb.Controllers
         #region 管理员登陆
         public ActionResult AdminLogin()
         {
+            Session["AdminId"] = null;
+            Session["Role"] = null;
             return View();
         }
         [HttpPost]
         public ActionResult AdminLogin(string Username, string Password)
         {
            
+
             var administrators = DB.Administrators.FirstOrDefault(a => a.AdminName == Username && a.AdminPwd == Password);
             if (administrators == null)
             {

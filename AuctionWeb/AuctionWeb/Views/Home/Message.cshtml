@@ -2,28 +2,36 @@
     ViewBag.Title = "Message";
     Layout = "~/Views/Shared/FrontMaster.cshtml";
 }
+@section scripts{
+<script>
+    function submit() {
+        if (!check())
+            return false;
+        var LContent = document.getElementById("LContent").value;
+        if (LContent == "")
+        {
+            alert("留言内容不能为空！");
+            return false;
+        }
+        var myform = document.getElementById("message");
+        myform.submit();
+    }
+</script>
+    }
 
 <div class="positions"><h1>在线留言</h1></div>
 <div class="content">
-    <form id="message" action="#" method="get">
+    <form id="message" action="/FrontLeaveWord/AddLeaveWord" method="post">
         <div class="messList">
-            <label>姓名：</label><input type="text" class="inputWidth" />
-        </div>
-        <div class="messList">
-            <label>性别：</label> 男<input type="radio" checked="checked" /> 女<input type="radio" />
-        </div>
-        <div class="messList">
-            <label>联系方式：</label><input type="text" class="inputWidth" />
+            <label>联系方式：</label>
+            <input type="tel" class="inputWidth" id="LTel" name="LTel" />
         </div>
         <div class="messList2">
             <label>留言内容：</label>
-            <textarea maxlength="40">
-
-            </textarea>
-        </div>
-        <div class="mes">
-            <input type="submit" value="提 交" />
-            <input type="reset" value="重 填">
+            <textarea maxlength="40" id="LContent" name="LContent"></textarea>
         </div>
     </form>
+    <div style="margin-right:140px" class="mes">
+        <input type="button" onclick="submit()" value="提 交" />
+    </div>
 </div><!--content/-->

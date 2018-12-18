@@ -40,11 +40,11 @@
             alert("倒计时时间必须小于15分钟！");
             return false;
         }
-        //商品描述
+        //藏品描述
         var GoodsDescription = document.getElementById("GoodsDescription");
         if(GoodsDescription.value=="")
         {
-            alert("商品描述不能为空！");
+            alert("藏品描述不能为空！");
             return false;
         }
         var addForm = document.getElementById("addForm");
@@ -58,11 +58,11 @@
     <form id="addForm" method="post" action="/GoodsInfo/Add" enctype="multipart/form-data">
         <ul class="ulColumn2">
             <li>
-                <span class="item_name" style="width:120px;">商品名称：</span>
-                <input type="text" id="GoodsName" name="GoodsName" title="请输入商品名称" class="textbox textbox_295" placeholder="商品名称" />
+                <span class="item_name" style="width:120px;">藏品名称：</span>
+                <input type="text" id="GoodsName" name="GoodsName" title="请输入藏品名称" class="textbox textbox_295" placeholder="藏品名称" />
             </li>
             <li>
-                <span class="item_name" style="width:120px;">商品类型：</span>
+                <span class="item_name" style="width:120px;">藏品类型：</span>
                 <select class="select" id="GoodsType" name="GoodsType">
                     <option selected="selected">古董</option>
                     <option>珠宝</option>
@@ -87,8 +87,8 @@
                 <img width="85" height="85" src="#" id="pic" />
             </li>
             <li>
-                <span class="item_name" style="width:120px;">商品数量：</span>
-                <input type="number" title="请输入商品数量" id="Num" name="Num" class="textbox textbox_295" placeholder="请输入整数" />
+                <span class="item_name" style="width:120px;">藏品数量：</span>
+                <input type="number" title="请输入藏品数量" id="Num" name="Num" class="textbox textbox_295" placeholder="请输入整数" />
             </li>
             <li>
                 <span class="item_name" style="width:120px;">起拍价格：</span>

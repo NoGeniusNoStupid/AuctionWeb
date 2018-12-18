@@ -17,10 +17,10 @@ namespace AuctionWeb.Models
         public int Id { get; set; }
         public Nullable<int> GoodsId { get; set; }
         public Nullable<int> PurchaserId { get; set; }
+        public string PayType { get; set; }
         public string CreditPrice { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
-        public string PayType { get; set; }
     
         public virtual GoodsInfo GoodsInfo { get; set; }
     }

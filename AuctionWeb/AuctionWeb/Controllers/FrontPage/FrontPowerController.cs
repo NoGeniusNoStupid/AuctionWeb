@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace AuctionWeb.Controllers
 {
-    public class FrontController : BaseController
+    public class FrontPowerController : BaseController
     {
         //权限控制
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

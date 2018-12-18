@@ -9,9 +9,9 @@ using System.Web.Mvc;
 
 namespace AuctionWeb.Controllers
 {
-    public class ShowController : FrontController
+    public class ShowController : FrontPowerController
     {
-        //展示商品信息
+        //展示藏品信息
         public ActionResult ProInfo(int id)
         {
             //初始化物品状态
@@ -24,7 +24,13 @@ namespace AuctionWeb.Controllers
                 ViewData["CreditRecord"] = "否";
             else
                 ViewData["CreditRecord"] = "是";
-
+            //表示有人竞拍
+            if (GoodsInfo.AuctionDetails != null && GoodsInfo.AuctionDetails.Count > 0)
+            {
+                //获得最近的竞拍人
+                var AuctionDetails = GoodsInfo.AuctionDetails.OrderByDescending(a => a.AddTime).FirstOrDefault();
+                ViewData["name"] = AuctionDetails.Purchaser.Username;
+            }
             return View(GoodsInfo);
         }    
 

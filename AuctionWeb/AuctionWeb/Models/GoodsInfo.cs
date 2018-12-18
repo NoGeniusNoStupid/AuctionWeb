@@ -17,8 +17,8 @@ namespace AuctionWeb.Models
         public GoodsInfo()
         {
             this.AuctionDetails = new HashSet<AuctionDetails>();
-            this.OrderInfo = new HashSet<OrderInfo>();
             this.CreditRecord = new HashSet<CreditRecord>();
+            this.OrderInfo = new HashSet<OrderInfo>();
         }
     
         public int Id { get; set; }
@@ -42,8 +42,8 @@ namespace AuctionWeb.Models
     
         public virtual Administrators Administrators { get; set; }
         public virtual ICollection<AuctionDetails> AuctionDetails { get; set; }
+        public virtual ICollection<CreditRecord> CreditRecord { get; set; }
         public virtual Purchaser Purchaser { get; set; }
         public virtual ICollection<OrderInfo> OrderInfo { get; set; }
-        public virtual ICollection<CreditRecord> CreditRecord { get; set; }
     }
 }

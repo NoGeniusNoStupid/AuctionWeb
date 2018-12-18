@@ -16,8 +16,9 @@ namespace AuctionWeb.Models
     {
         public int Id { get; set; }
         public string LContent { get; set; }
-        public Nullable<System.DateTime> LTime { get; set; }
+        public string LTel { get; set; }
         public Nullable<int> PurchaserId { get; set; }
+        public string Status { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
     
         public virtual Purchaser Purchaser { get; set; }

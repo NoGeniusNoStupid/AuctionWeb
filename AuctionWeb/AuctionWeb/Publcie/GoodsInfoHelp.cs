@@ -27,7 +27,7 @@ namespace AuctionWeb.Publcie
         public static void GoodsInfoInit()
         {
             var goodsLits = DB.GoodsInfo.Where(a => a.Status == "未开始" || a.Status == "进行中").ToList<GoodsInfo>();
-            string state = string.Empty;//商品拍卖状态
+            string state = string.Empty;//藏品拍卖状态
             DateTime dt = DateTime.Now;
             foreach (var item in goodsLits)
             {
