@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">用户管理</h2>
+
+</div>
+<section class="mtb">
+    <form action="/Purchaser/Manage" method="post">
+        <input type="text" name="search" class="textbox textbox_225" placeholder="输入用户名..." />
+        <input type="submit" value="查询" class="group_btn" />
+    </form>
+</section>
+<table class="table">
+    <tr>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>电话</th>
+        <th>身份证号</th>
+        <th>姓名</th>
+        <th>地址</th>
+        <th>状态</th>
+        <th>注册时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.Purchaser> mlist = (List<AuctionWeb.Models.Purchaser>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+
+                <td class="center">@item.Id</td>
+                <td class="center">@item.Username</td>
+                <td class="center">@item.Telephone</td>
+                <td class="center">@item.IdNum</td>
+                <td class="center">@item.TrueName</td>
+                <td class="center">@item.Address</td>
+                <td class="center">@item.State</td>
+                <td class="center">@item.RegTime</td>
+                <td class="center">
+                    @if (item.State != "正常")
+                    {
+                        <a href="/Purchaser/Blacklist/@item.Id" title="加入黑名单" class="">加入黑名单</a>
+                    }
+                    else
+                    {
+                        <a href="/Purchaser/Blacklist/@item.Id" title="撤销">撤销</a>
+                    }
+                    <a href="/Purchaser/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>

@@ -1,0 +1,53 @@
+﻿@model AuctionWeb.Models.Purchaser
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+    <script>
+        function submit() {
+            if (!check())
+                return false;
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">完善个人信息</strong></h2>
+    <form id="addForm" method="post" action="/FrontPurchaser/Edit" enctype="multipart/form-data">
+        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Username" value="@Model.Username" />
+        <input type="hidden"  name="Password" value="@Model.Password" />
+        <input type="hidden" name="State" value="@Model.State" />
+        <input type="hidden" name="CreditValue" value="@Model.CreditValue" />
+        <input type="hidden" name="RegTime" value="@Model.RegTime" />
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">用户名：</span>
+                 <label>@Model.Username</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">姓名：</span>
+                <input type="text" id="TrueName" title="请输入姓名" name="TrueName" class="textbox textbox_295" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">电话：</span>
+                <input type="tel" id="Telephone" name="Telephone" class="textbox textbox_295"  />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">身份证号码：</span>
+                <input type="email" id="IdNum" title="请输入身份证号码" class="textbox textbox_295" name="IdNum"  />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">联系地址：</span>
+                <input type="text" title="请输入联系地址" id="Address" name="Address" class="textbox textbox_295" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

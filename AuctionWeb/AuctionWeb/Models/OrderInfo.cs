@@ -28,6 +28,7 @@ namespace AuctionWeb.Models
         public string PayType { get; set; }
         public string State { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
+        public string Tel { get; set; }
     
         public virtual ICollection<Evaluate> Evaluate { get; set; }
         public virtual GoodsInfo GoodsInfo { get; set; }

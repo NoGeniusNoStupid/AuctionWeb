@@ -26,17 +26,22 @@ namespace AuctionWeb.Publcie
         /// </summary>
         public static void GoodsInfoInit()
         {
-            var goodsLits = DB.GoodsInfo.Where(a => a.Status == "未开始" || a.Status == "进行中").ToList<GoodsInfo>();
+            var goodsLits = DB.GoodsInfo.Where(a => (a.Status == "未开始" || a.Status == "进行中") && a.isSucc == "通过").ToList<GoodsInfo>();
             string state = string.Empty;//藏品拍卖状态
             DateTime dt = DateTime.Now;
             foreach (var item in goodsLits)
             {
                 if (dt > item.EndTime)
                 {
-                    if (item.AuctionDetails == null && item.AuctionDetails.Count<=0)
-                       state = "流拍";
+                    if (item.AuctionDetails == null && item.AuctionDetails.Count <= 0)
+                        state = "流拍";
                     else
-                       state = "成功";
+                    {
+                   
+                        state = "成功"; 
+                        //生成订单
+                        CreateOrder(item);
+                    }
                 }
                 if (dt < item.StartTime)
                 {
@@ -52,6 +57,8 @@ namespace AuctionWeb.Publcie
                         if (item.CountDownTime < DateTime.Now)
                         {
                             state = "成功";
+                            //生成订单
+                            CreateOrder(item);
                         }
                     }
                 }
@@ -59,6 +66,21 @@ namespace AuctionWeb.Publcie
 
                 DB.Entry(item).State = EntityState.Modified;
             }
+            DB.SaveChanges();
+        }
+        //生成订单
+        private static void CreateOrder(GoodsInfo item)
+        {
+            //获得最后一条竞拍记录
+            var AuctionDetails = item.AuctionDetails.OrderByDescending(a => a.AddTime).FirstOrDefault();
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.GoodsId = item.Id;
+            orderInfo.BuyPrice = item.CurrentPrice;
+            orderInfo.PurchaserId = AuctionDetails.PurchaserId;
+            orderInfo.BuyTime = AuctionDetails.AddTime;
+            orderInfo.AddTime = DateTime.Now;
+            orderInfo.State = "未付款";
+            DB.OrderInfo.Add(orderInfo);
             DB.SaveChanges();
         }
     }

@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+    <script>
+        function submit() {         
+            if (!check())
+                return false;
+            var AdminPwd = document.getElementById("AdminPwd").value;
+            var SurePwd = document.getElementById("SurePwd").value;
+            if (AdminPwd != SurePwd)
+            {
+                alert("两次输入的密码不一致请检查！");
+                return false;
+            }
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">分列内容布局</strong></h2>
+    <form id="addForm" method="post" action="/Admin/Add" enctype="multipart/form-data">
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">用户名：</span>
+                <input type="text" id="AdminName" name="AdminName" title="请输入用户名" class="textbox textbox_295" placeholder="用户名" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">密码：</span>
+                <input type="text" id="AdminPwd" name="AdminPwd" title="请输入密码" class="textbox textbox_295" placeholder="密码" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">确认密码：</span>
+                <input type="text" id="SurePwd" name="SurePwd" title="请确认密码" class="textbox textbox_295" placeholder="确认密码" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

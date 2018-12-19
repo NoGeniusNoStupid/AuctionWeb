@@ -1,0 +1,73 @@
+﻿@model AuctionWeb.Models.OrderInfo
+@{
+    ViewBag.Title = "Pay";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+    <script>
+        function submit() {
+           
+            if (!check())
+                return false;
+
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">订单支付</strong></h2>
+    <form id="addForm" method="post" action="/OrderInfo/Pay" enctype="multipart/form-data">
+        <input type="hidden" value="@Model.Id" name="Id" />
+        <input type="hidden" value="@Model.GoodsId" name="GoodsId" />
+        <input type="hidden" value="@Model.PurchaserId" name="PurchaserId" />
+        <input type="hidden" value="@Model.BuyPrice" name="BuyPrice" />
+        <input type="hidden" value="@Model.BuyTime" name="BuyTime" />
+        <input type="hidden" value="@Model.State" name="State" />
+        <input type="hidden" value="@Model.AddTime" name="AddTime" />
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">商品编号：</span>
+                <label>@Model.Id</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">商品名称：</span>
+                <label>@Model.GoodsInfo.GoodsName</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">最终价格：</span>
+                <label>@Model.BuyPrice</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">购买时间：</span>
+                <label>@Model.BuyTime</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">送货地址：</span>
+                <input type="text" id="SendAddress" name="SendAddress" title="请输入送货地址" value="@Model.Purchaser.Address" class="textbox textbox_295" placeholder="送货地址" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">电话：</span>
+                <input type="tel" id="Tel" name="Tel" value="@Model.Purchaser.Telephone" class="textbox textbox_295" placeholder="作者" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">付款方式：</span>
+                <table>
+                    <tr>
+                        <td><img src="/Content/images/支付宝.jpg" width="300" height="100" /></td>
+                        <td><img src="/Content/images/微信.jpg" width="300" height="100" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" value="支付宝支付" name="PayType" checked="checked" /></td>
+                        <td><input type="radio" value="微信支付" name="PayType" /></td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

@@ -32,19 +32,39 @@ namespace AuctionWeb.Controllers.AdminPage
             int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
             int pageSize = 5;//页面记录数
             List<GoodsInfo> mlist = new List<GoodsInfo>();
+            int listCount = 0;//总数
             //查询记录
-            if (string.IsNullOrEmpty(search))
+            if (Session["AdminId"] == null)
             {
-                mlist = DB.GoodsInfo.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                //个人用户
+                int purId = Convert.ToInt32(Session["PurId"]);
+                if (string.IsNullOrEmpty(search) && string.IsNullOrEmpty(GoodsType))
+                {
+                    mlist = DB.GoodsInfo.Where(a => a.PurchaserId == purId).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                }
+                else
+                {
+                    if (GoodsType == "全部")
+                        mlist = DB.GoodsInfo.Where(a =>a.PurchaserId == purId && a.GoodsName.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                    else
+                        mlist = DB.GoodsInfo.Where(a =>a.PurchaserId == purId && a.GoodsName.Contains(search) && a.GoodsType == GoodsType).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                }
             }
             else
             {
-                if (GoodsType == "全部")
-                   mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                if (string.IsNullOrEmpty(search) && string.IsNullOrEmpty(GoodsType))
+                {
+                    mlist = DB.GoodsInfo.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                }
                 else
-                   mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search) && a.GoodsType == GoodsType).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                {
+                    if (GoodsType == "全部")
+                        mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search)).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                    else
+                        mlist = DB.GoodsInfo.Where(a => a.GoodsName.Contains(search) && a.GoodsType == GoodsType).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();
+                }
+                listCount = DB.GoodsInfo.Where(a => true).Count();
             }
-            int listCount = DB.GoodsInfo.Where(a => true).Count();
             //生成导航条
             string strBar = ManagePageBar.GetPageBar(pageIndex, listCount, pageSize);
 
@@ -92,6 +112,24 @@ namespace AuctionWeb.Controllers.AdminPage
             DB.Entry(Info).State = System.Data.EntityState.Deleted;
             DB.SaveChanges();
             return RedirectToAction("Manage");
+        }
+        //竞拍记录查看
+        public ActionResult AuctionDetail(int id)
+        {
+            var Info = DB.GoodsInfo.FirstOrDefault(a => a.Id == id);
+            //分页设置
+            int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
+            int pageSize = 5;//页面记录数
+            List<AuctionDetails> mlist = new List<AuctionDetails>();
+            mlist = Info.AuctionDetails.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<AuctionDetails>();
+            int listCount = Info.AuctionDetails.Count;
+            //生成导航条
+            string strBar = ManagePageBar.GetPageBar(pageIndex, listCount, pageSize);
+
+            ViewData["List"] = mlist;
+            ViewData["PageBar"] = strBar;
+
+            return View();
         }
         #endregion
 

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "AuctionDetail";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">竞拍记录</h2>
+    <a href="javascript:history.go(-1)" style="float:right">返回上一页</a>
+</div>
+<table class="table">
+    <tr>
+      
+        <th>竞拍编号</th>
+        <th>藏品名称</th>
+        <th>藏品类型</th>
+        <th>竞拍者用户名</th>
+        <th>竞拍者姓名</th>
+        <th>当前竞价</th>
+        <th>竞拍时间</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.AuctionDetails> mlist = (List<AuctionWeb.Models.AuctionDetails>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+         
+                <td class="center">@item.Id</td>
+                <td>@item.GoodsInfo.GoodsName</td>
+                <td>@item.GoodsInfo.GoodsType</td>
+                <td class="center"><strong class="">@item.Purchaser.Username</strong></td>
+                <td class="center"><strong class="">@item.Purchaser.TrueName</strong></td>
+                <td class="center"><strong class="rmb_icon">@item.TempPrice</strong></td>
+                <td class="center">@item.AddTime</td>
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>

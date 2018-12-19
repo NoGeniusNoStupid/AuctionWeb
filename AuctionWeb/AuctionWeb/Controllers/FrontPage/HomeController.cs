@@ -29,7 +29,7 @@ namespace AuctionWeb.Controllers
             int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
             int pageSize = 5;//页面记录数
             List<GoodsInfo> mlist = new List<GoodsInfo>();
-            mlist = DB.GoodsInfo.Where(a => true).OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();     
+            mlist = DB.GoodsInfo.Where(a => true && a.isSucc == "通过").OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<GoodsInfo>();     
             int listCount = DB.GoodsInfo.Where(a => true).Count();
             //生成导航条
             string strBar = ManagePageBar.GetPageBar(pageIndex, listCount, pageSize);

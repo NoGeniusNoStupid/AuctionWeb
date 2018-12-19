@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">订单管理</h2>
+
+</div>
+<section class="mtb">
+    <form action="/OrderInfo/Manage" method="post">
+        <input type="text" name="search" class="textbox textbox_225" placeholder="输入用户名或商品名称..." />
+        <input type="submit" value="查询" class="group_btn" />
+    </form>
+</section>
+<table class="table">
+    <tr>
+        <th>编号</th>
+        <th>商品名称</th>
+        <th>用户名</th>
+        <th>姓名</th>
+        <th>最终价格</th>
+        <th>购买时间</th>
+        <th>收货地址</th>
+        <th>联系电话</th>
+        <th>付款方式</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.OrderInfo> mlist = (List<AuctionWeb.Models.OrderInfo>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+
+                <td class="center">@item.Id</td>
+                <td class="center">@item.GoodsInfo.GoodsName</td>
+                <td class="center">@item.Purchaser.Username</td>
+                <td class="center">@item.Purchaser.TrueName</td>
+                <td class="center">@item.BuyPrice</td>
+                <td class="center">@item.BuyTime</td>
+                <td class="center">@item.SendAddress</td>
+                <td class="center">@item.Tel</td>
+                <td class="center">@item.PayType</td>
+                <td class="center">@item.State</td>
+                <td class="center">
+                    @if (item.State == "未付款"&&Session["PurId"]!=null)
+                    {
+                        <a href="/OrderInfo/Pay/@item.Id" title="支付" class="">支付</a>
+                    }
+                    <a href="/OrderInfo/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>

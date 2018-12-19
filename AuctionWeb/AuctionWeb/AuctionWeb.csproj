@@ -133,14 +133,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminPage\AdminController.cs" />
-    <Compile Include="Controllers\AdminPage\GoodsInfoController.cs" />
+    <Compile Include="Controllers\Public\GoodsInfoController.cs" />
     <Compile Include="Controllers\AdminPage\NewsController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Public\OrderInfoController.cs" />
+    <Compile Include="Controllers\AdminPage\PurchaserController.cs" />
+    <Compile Include="Controllers\Public\BaseController.cs" />
     <Compile Include="Controllers\AdminPage\PowerController.cs" />
     <Compile Include="Controllers\FrontPage\FrontPowerController.cs" />
+    <Compile Include="Controllers\FrontPage\FrontPurchaserController.cs" />
     <Compile Include="Controllers\FrontPage\HomeController.cs" />
     <Compile Include="Controllers\FrontPage\FrontLeaveWordController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\Public\LoginController.cs" />
     <Compile Include="Controllers\FrontPage\ShowController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -889,6 +892,15 @@
     <Content Include="Views\News\Manage.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\Home\NewInfo.cshtml" />
+    <Content Include="Views\GoodsInfo\AuctionDetail.cshtml" />
+    <Content Include="Views\Purchaser\Manage.cshtml" />
+    <Content Include="Views\OrderInfo\Manage.cshtml" />
+    <Content Include="Views\OrderInfo\Pay.cshtml" />
+    <Content Include="Views\Admin\Add.cshtml" />
+    <Content Include="Views\Admin\UpdatePwd.cshtml" />
+    <Content Include="Views\Admin\Manage.cshtml" />
+    <Content Include="Views\FrontPurchaser\Edit.cshtml" />
+    <Content Include="Views\FrontPurchaser\UpdatePwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

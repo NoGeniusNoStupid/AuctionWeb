@@ -2,5 +2,43 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
+<section>
+    <h2><strong style="color:grey;">首页</strong></h2>
+    <ul class="ulColumn2">
+        <li>
+            <span class="item_name" style="width:120px;">本系统俊婷开发</span>
+        </li>
+        <li>
+            <span class="item_name" style="width:120px;">指导老师：XXXX</span>
+        </li>
+        @if (Session["AdminId"] == null)
+        {
+             <li>
+                <span class="item_name" style="width:120px;">我发布的产品：</span>
+                 <label>@ViewData["GoodsInfo"] 件</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">我成交：</span>
+                <label>@ViewData["OrderInfo"] 单</label>
+            </li> 
+        }
+        else
+        {
+            <li>
+                <span class="item_name" style="width:120px;">系统拥有会员：</span>
+                <label>@ViewData["Purchaser"] 人</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">系统目前藏品：</span>
+                <label>@ViewData["GoodsInfo"] 件</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">系统交易：</span>
+                <label>@ViewData["OrderInfo"] 单</label>
+            </li>
+        }
 
 
+    </ul>
+
+</section>

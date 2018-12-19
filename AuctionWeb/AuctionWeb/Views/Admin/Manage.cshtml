@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">管理员管理</h2>
+</div>
+
+<table class="table">
+    <tr>
+        <th>编号</th>
+        <th>管理员账号</th>
+        <th>密码</th>
+        <th>添加时间</th>
+        <th>操作</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.Administrators> mlist = (List<AuctionWeb.Models.Administrators>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+                <td class="center">@item.Id</td>
+                <td class="center">@item.AdminName</td>
+                <td class="center">@item.AdminPwd</td>
+                <td class="center">@item.AddTime</td>
+
+                <td class="center">
+                    @*<a href="/Admin/UpdatePwd/@item.Id" title="修改密码" class="link_icon">修改密码</a>*@
+                    <a href="/Admin/Delete/@item.Id" onclick="return confirm('确定要删除吗？')" title="删除" class="link_icon">删除</a>
+                </td>
+
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>

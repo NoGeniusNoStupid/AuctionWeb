@@ -1,0 +1,55 @@
+﻿@model AuctionWeb.Models.Administrators
+@{
+    ViewBag.Title = "UpdatePwd";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+    <script>
+        function submit() {
+            if (!check())
+                return false;
+            var OldPwd = document.getElementById("OldPwd").value;
+            var OldAdminPwd = document.getElementById("OldAdminPwd").value;
+            var AdminPwd = document.getElementById("AdminPwd").value;
+            var SurePwd = document.getElementById("SurePwd").value;
+            if (OldPwd != OldAdminPwd)
+            {
+                alert("原密码错误，请重新输入！");
+                return false;
+            }
+            if (AdminPwd != SurePwd) {
+                alert("两次输入的密码不一致请检查！");
+                return false;
+            }
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">密码修改</strong></h2>
+    <form id="addForm" method="post" action="/Admin/UpdatePwd" enctype="multipart/form-data">
+        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+        <input type="hidden" id="OldPwd" name="OldPwd" value="@Model.AdminPwd" />
+        <ul class="ulColumn2">
+            
+            <li>
+                <span class="item_name" style="width:120px;">原密码：</span>
+                <input type="password" id="OldAdminPwd" name="OldAdminPwd"  title="请输入原密码" class="textbox textbox_295" placeholder="原密码" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">密码：</span>
+                <input type="password" id="AdminPwd" name="AdminPwd" title="请输入密码" class="textbox textbox_295" placeholder="密码" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">确认密码：</span>
+                <input type="password" id="SurePwd" name="SurePwd" title="请确认密码" class="textbox textbox_295" placeholder="确认密码" />
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

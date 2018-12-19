@@ -101,6 +101,7 @@
           <Property Name="BuyPrice" Type="varchar" MaxLength="50" />
           <Property Name="BuyTime" Type="datetime" />
           <Property Name="SendAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
           <Property Name="PayType" Type="varchar" MaxLength="50" />
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="AddTime" Type="datetime" />
@@ -394,6 +395,7 @@
           <NavigationProperty Name="Evaluate" Relationship="Self.FK_Evaluate_Evaluate" FromRole="OrderInfo" ToRole="Evaluate" />
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_OrderInfo_GoodsInfo" FromRole="OrderInfo" ToRole="GoodsInfo" />
           <NavigationProperty Name="Purchaser" Relationship="Self.FK_OrderInfo_Purchaser" FromRole="OrderInfo" ToRole="Purchaser" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Purchaser">
           <Key>
@@ -673,6 +675,7 @@
           <EntitySetMapping Name="OrderInfo">
             <EntityTypeMapping TypeName="AuctionWebModel.OrderInfo">
               <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GoodsId" ColumnName="GoodsId" />
                 <ScalarProperty Name="PurchaserId" ColumnName="PurchaserId" />

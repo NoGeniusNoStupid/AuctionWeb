@@ -25,14 +25,20 @@ namespace AuctionWeb.Controllers
                return RedirectDialogToAction("验证码错误，请重新输入！", true);
            }
            var purchaser = DB.Purchaser.FirstOrDefault(a => a.Username == Username && a.Password == Password);
+
+
            if (purchaser == null)
            {
                return RedirectDialogToAction("用户名或密码错误，请重新输入！", true);
            }
            else
            {
+               if (purchaser.State=="黑名单")
+                   return RedirectDialogToAction("该用户已被加入黑名单，请联系管理员处理！", true);
+
                Session["PurId"] = purchaser.Id;
                Session["Role"] = "用户";
+               Session["AdminId"] = null;
                return RedirectToAction("Index", "Home");
            }
         }
@@ -78,7 +84,6 @@ namespace AuctionWeb.Controllers
         }
         #endregion
 
-
         #region 管理员登陆
         public ActionResult AdminLogin()
         {
@@ -94,12 +99,13 @@ namespace AuctionWeb.Controllers
             var administrators = DB.Administrators.FirstOrDefault(a => a.AdminName == Username && a.AdminPwd == Password);
             if (administrators == null)
             {
-                return RedirectDialogToAction("用户名或密码错误，请重新输入！", false);
+                return RedirectDialogToAction("用户名或密码错误，请重新输入！", true);
             }
             else
             {
                 Session["AdminId"] = administrators.Id;
                 Session["Role"] = "管理员";
+                Session["PurId"] = null;
                 return RedirectToAction("Index", "Admin");
             }
         }
