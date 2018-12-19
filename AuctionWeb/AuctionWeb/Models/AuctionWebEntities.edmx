@@ -36,16 +36,6 @@
           <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="AddTime" Type="datetime" />
         </EntityType>
-        <EntityType Name="Evaluate">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AppMark" Type="int" />
-          <Property Name="AppContent" Type="varchar" MaxLength="250" />
-          <Property Name="OrderId" Type="int" />
-          <Property Name="Addtime" Type="datetime" />
-        </EntityType>
         <EntityType Name="GoodsInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -105,6 +95,9 @@
           <Property Name="PayType" Type="varchar" MaxLength="50" />
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="AddTime" Type="datetime" />
+          <Property Name="Evaluate" Type="varchar" MaxLength="50" />
+          <Property Name="EvaluateTime" Type="datetime" />
+          <Property Name="EvaluateState" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Purchaser">
           <Key>
@@ -154,18 +147,6 @@
             </Principal>
             <Dependent Role="CreditRecord">
               <PropertyRef Name="GoodsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Evaluate_Evaluate">
-          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="0..1" />
-          <End Role="Evaluate" Type="Self.Evaluate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Evaluate">
-              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,7 +216,6 @@
           <EntitySet Name="Administrators" EntityType="Self.Administrators" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AuctionDetails" EntityType="Self.AuctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditRecord" EntityType="Self.CreditRecord" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Evaluate" EntityType="Self.Evaluate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodsInfo" EntityType="Self.GoodsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveWord" EntityType="Self.LeaveWord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
@@ -252,10 +232,6 @@
           <AssociationSet Name="FK_CreditRecord_GoodsInfo" Association="Self.FK_CreditRecord_GoodsInfo">
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
             <End Role="CreditRecord" EntitySet="CreditRecord" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evaluate_Evaluate" Association="Self.FK_Evaluate_Evaluate">
-            <End Role="OrderInfo" EntitySet="OrderInfo" />
-            <End Role="Evaluate" EntitySet="Evaluate" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsInfo_Administrators" Association="Self.FK_GoodsInfo_Administrators">
             <End Role="Administrators" EntitySet="Administrators" />
@@ -316,17 +292,6 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_CreditRecord_GoodsInfo" FromRole="CreditRecord" ToRole="GoodsInfo" />
-        </EntityType>
-        <EntityType Name="Evaluate">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AppMark" Type="Int32" />
-          <Property Name="AppContent" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="OrderId" Type="Int32" />
-          <Property Name="Addtime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="OrderInfo" Relationship="Self.FK_Evaluate_Evaluate" FromRole="Evaluate" ToRole="OrderInfo" />
         </EntityType>
         <EntityType Name="GoodsInfo">
           <Key>
@@ -392,10 +357,12 @@
           <Property Name="PayType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Evaluate" Relationship="Self.FK_Evaluate_Evaluate" FromRole="OrderInfo" ToRole="Evaluate" />
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_OrderInfo_GoodsInfo" FromRole="OrderInfo" ToRole="GoodsInfo" />
           <NavigationProperty Name="Purchaser" Relationship="Self.FK_OrderInfo_Purchaser" FromRole="OrderInfo" ToRole="Purchaser" />
           <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Evaluate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EvaluateTime" Type="DateTime" Precision="3" />
+          <Property Name="EvaluateState" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Purchaser">
           <Key>
@@ -464,18 +431,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Evaluate_Evaluate">
-          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="0..1" />
-          <End Role="Evaluate" Type="Self.Evaluate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Evaluate">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GoodsInfo_Purchaser">
           <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
@@ -530,7 +485,6 @@
           <EntitySet Name="Administrators" EntityType="Self.Administrators" />
           <EntitySet Name="AuctionDetails" EntityType="Self.AuctionDetails" />
           <EntitySet Name="CreditRecord" EntityType="Self.CreditRecord" />
-          <EntitySet Name="Evaluate" EntityType="Self.Evaluate" />
           <EntitySet Name="GoodsInfo" EntityType="Self.GoodsInfo" />
           <EntitySet Name="LeaveWord" EntityType="Self.LeaveWord" />
           <EntitySet Name="News" EntityType="Self.News" />
@@ -551,10 +505,6 @@
           <AssociationSet Name="FK_CreditRecord_GoodsInfo" Association="Self.FK_CreditRecord_GoodsInfo">
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
             <End Role="CreditRecord" EntitySet="CreditRecord" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evaluate_Evaluate" Association="Self.FK_Evaluate_Evaluate">
-            <End Role="OrderInfo" EntitySet="OrderInfo" />
-            <End Role="Evaluate" EntitySet="Evaluate" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsInfo_Purchaser" Association="Self.FK_GoodsInfo_Purchaser">
             <End Role="Purchaser" EntitySet="Purchaser" />
@@ -613,17 +563,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Evaluate">
-            <EntityTypeMapping TypeName="AuctionWebModel.Evaluate">
-              <MappingFragment StoreEntitySet="Evaluate">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AppMark" ColumnName="AppMark" />
-                <ScalarProperty Name="AppContent" ColumnName="AppContent" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Addtime" ColumnName="Addtime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GoodsInfo">
             <EntityTypeMapping TypeName="AuctionWebModel.GoodsInfo">
               <MappingFragment StoreEntitySet="GoodsInfo">
@@ -675,6 +614,9 @@
           <EntitySetMapping Name="OrderInfo">
             <EntityTypeMapping TypeName="AuctionWebModel.OrderInfo">
               <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="EvaluateState" ColumnName="EvaluateState" />
+                <ScalarProperty Name="EvaluateTime" ColumnName="EvaluateTime" />
+                <ScalarProperty Name="Evaluate" ColumnName="Evaluate" />
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GoodsId" ColumnName="GoodsId" />

@@ -173,9 +173,6 @@
       <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBContextFactory.cs" />
-    <Compile Include="Models\Evaluate.cs">
-      <DependentUpon>AuctionWebEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GoodsInfo.cs">
       <DependentUpon>AuctionWebEntities.tt</DependentUpon>
     </Compile>

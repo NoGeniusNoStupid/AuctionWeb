@@ -44,9 +44,17 @@
                 <td class="center">@item.PayType</td>
                 <td class="center">@item.State</td>
                 <td class="center">
-                    @if (item.State == "未付款"&&Session["PurId"]!=null)
+                    @if (item.State == "未付款" && Session["PurId"] != null)
                     {
                         <a href="/OrderInfo/Pay/@item.Id" title="支付" class="">支付</a>
+                    }
+                    @if (item.State == "付款成功" && string.IsNullOrEmpty(item.Evaluate))
+                    {
+                        <a href="/OrderInfo/Evaluate/@item.Id" title="投诉" class="">投诉</a>
+                    }
+                    else
+                    {
+                        <a href="/OrderInfo/Evaluate/@item.Id" title="撤销" class="">撤销</a>
                     }
                     <a href="/OrderInfo/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
                 </td>

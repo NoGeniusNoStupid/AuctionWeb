@@ -14,11 +14,6 @@ namespace AuctionWeb.Models
     
     public partial class OrderInfo
     {
-        public OrderInfo()
-        {
-            this.Evaluate = new HashSet<Evaluate>();
-        }
-    
         public int Id { get; set; }
         public Nullable<int> GoodsId { get; set; }
         public Nullable<int> PurchaserId { get; set; }
@@ -29,8 +24,10 @@ namespace AuctionWeb.Models
         public string State { get; set; }
         public Nullable<System.DateTime> AddTime { get; set; }
         public string Tel { get; set; }
+        public string Evaluate { get; set; }
+        public Nullable<System.DateTime> EvaluateTime { get; set; }
+        public string EvaluateState { get; set; }
     
-        public virtual ICollection<Evaluate> Evaluate { get; set; }
         public virtual GoodsInfo GoodsInfo { get; set; }
         public virtual Purchaser Purchaser { get; set; }
     }
