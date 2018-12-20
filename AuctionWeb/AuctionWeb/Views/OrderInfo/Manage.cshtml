@@ -9,6 +9,11 @@
 </div>
 <section class="mtb">
     <form action="/OrderInfo/Manage" method="post">
+        <select class="select" name="EvaluateType">
+            <option>全部</option>
+            <option>正常</option>
+            <option>投诉</option>
+        </select>
         <input type="text" name="search" class="textbox textbox_225" placeholder="输入用户名或商品名称..." />
         <input type="submit" value="查询" class="group_btn" />
     </form>
@@ -17,14 +22,20 @@
     <tr>
         <th>编号</th>
         <th>商品名称</th>
-        <th>用户名</th>
-        <th>姓名</th>
+        @if (Session["AdminId"] != null)
+        {
+            <th>用户名</th>
+            <th>姓名</th>
+        }
         <th>最终价格</th>
         <th>购买时间</th>
         <th>收货地址</th>
         <th>联系电话</th>
         <th>付款方式</th>
-        <th>状态</th>
+        <th>订单状态</th>
+        <th>投诉状态</th>
+        <th>投诉内容</th>
+        <th>投诉时间</th>
         <th>操作</th>
     </tr>
     @{
@@ -32,30 +43,40 @@
         foreach (var item in mlist)
         {
             <tr>
-
                 <td class="center">@item.Id</td>
                 <td class="center">@item.GoodsInfo.GoodsName</td>
-                <td class="center">@item.Purchaser.Username</td>
-                <td class="center">@item.Purchaser.TrueName</td>
+                @if (Session["AdminId"] != null)
+                {
+                    <td class="center">@item.Purchaser.Username</td>
+                    <td class="center">@item.Purchaser.TrueName</td>
+                }
                 <td class="center">@item.BuyPrice</td>
                 <td class="center">@item.BuyTime</td>
                 <td class="center">@item.SendAddress</td>
                 <td class="center">@item.Tel</td>
                 <td class="center">@item.PayType</td>
                 <td class="center">@item.State</td>
+                <td class="center">@item.EvaluateState</td>
+                <td class="center">@item.Evaluate</td>
+                <td class="center">@item.EvaluateTime</td>
                 <td class="center">
                     @if (item.State == "未付款" && Session["PurId"] != null)
                     {
                         <a href="/OrderInfo/Pay/@item.Id" title="支付" class="">支付</a>
                     }
-                    @if (item.State == "付款成功" && string.IsNullOrEmpty(item.Evaluate))
+                    @if (item.State == "付款成功" && string.IsNullOrEmpty(item.EvaluateState) && Session["PurId"] != null)
                     {
-                        <a href="/OrderInfo/Evaluate/@item.Id" title="投诉" class="">投诉</a>
+                        <a href="/OrderInfo/Evaluate/@item.Id" onclick="return confirm('确认要投诉此订单？')" title="投诉" class="">投诉</a>
                     }
-                    else
+                    else if (item.EvaluateState == "投诉" && Session["PurId"] != null)
                     {
-                        <a href="/OrderInfo/Evaluate/@item.Id" title="撤销" class="">撤销</a>
+                        <a href="/OrderInfo/CancelEvaluate/@item.Id" onclick="return confirm('确认要撤销此订单？')" title="撤销" class="">撤销</a>
                     }
+                    
+                   @if (Session["AdminId"] != null && item.EvaluateState == "投诉")
+                   {
+                        <a href="/OrderInfo/DoneEvaluate/@item.Id" onclick="return confirm('确定要处理投诉吗？')" title="处理" class="">处理</a>
+                   }
                     <a href="/OrderInfo/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
                 </td>
             </tr>

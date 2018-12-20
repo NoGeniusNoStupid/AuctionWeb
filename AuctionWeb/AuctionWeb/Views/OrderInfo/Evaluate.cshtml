@@ -1,0 +1,65 @@
+﻿@model AuctionWeb.Models.OrderInfo
+@{
+    ViewBag.Title = "Evaluate";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+@section scripts{
+    <script>
+        function submit() {
+
+            var Evaluate = document.getElementById("Evaluate").value;
+            if (Evaluate == "")
+            {
+                alert("投诉内容不能为空");
+                return;
+            }
+          
+            var addForm = document.getElementById("addForm");
+            addForm.submit();
+        }
+    </script>
+}
+<section>
+    <h2><strong style="color:grey;">订单投诉</strong></h2>
+    <form id="addForm" method="post" action="/OrderInfo/Evaluate" enctype="multipart/form-data">
+        <input type="hidden" value="@Model.Id" name="Id" />
+        <input type="hidden" value="@Model.GoodsId" name="GoodsId" />
+        <input type="hidden" value="@Model.PurchaserId" name="PurchaserId" />
+        <input type="hidden" value="@Model.BuyPrice" name="BuyPrice" />
+        <input type="hidden" value="@Model.BuyTime" name="BuyTime" />
+        <input type="hidden" value="@Model.State" name="State" />
+        <input type="hidden" value="@Model.AddTime" name="AddTime" />
+        <input type="hidden" value="@Model.SendAddress" name="SendAddress" />
+        <input type="hidden" value="@Model.Tel" name="Tel" />
+        <input type="hidden" value="@Model.PayType" name="PayType" />
+        <ul class="ulColumn2">
+            <li>
+                <span class="item_name" style="width:120px;">商品编号：</span>
+                <label>@Model.Id</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">商品名称：</span>
+                <label>@Model.GoodsInfo.GoodsName</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">最终价格：</span>
+                <label>@Model.BuyPrice</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">购买时间：</span>
+                <label>@Model.BuyTime</label>
+            </li>
+            <li>
+                <span class="item_name" style="width:120px;">投诉内容：</span>
+                <textarea name="Evaluate" class="textbox textbox_295" id="Evaluate" style="width:300px;height:120px" maxlength="40"></textarea>
+            </li>
+
+
+            <li>
+                <span class="item_name" style="width:120px;"></span>
+                <a class="link_btn" href="#" onclick="submit()">上传</a>
+            </li>
+        </ul>
+    </form>
+</section>

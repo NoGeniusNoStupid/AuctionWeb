@@ -898,6 +898,7 @@
     <Content Include="Views\Admin\Manage.cshtml" />
     <Content Include="Views\FrontPurchaser\Edit.cshtml" />
     <Content Include="Views\FrontPurchaser\UpdatePwd.cshtml" />
+    <Content Include="Views\OrderInfo\Evaluate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

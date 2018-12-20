@@ -46,7 +46,14 @@
         <h1><img src="/Content/Admin/images/admin_logo.png" /></h1>
         <ul class="rt_nav">
             <li><a href="/Home/Index" target="_blank" class="website_icon">站点首页</a></li>
-            <li><a href="/Login/AdminLogin" class="quit_icon">注销</a></li>
+            @if(Session["AdminId"]==null)
+            {
+                 <li><a href="/Login/Login" class="quit_icon">注销</a></li> 
+            }
+            else
+            { 
+                 <li><a href="/Login/AdminLogin" class="quit_icon">注销</a></li>
+            }
         </ul>
     </header>
     <!--aside nav-->
