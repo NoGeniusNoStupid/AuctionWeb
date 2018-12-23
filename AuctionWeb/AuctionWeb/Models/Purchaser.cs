@@ -20,6 +20,7 @@ namespace AuctionWeb.Models
             this.GoodsInfo = new HashSet<GoodsInfo>();
             this.LeaveWord = new HashSet<LeaveWord>();
             this.OrderInfo = new HashSet<OrderInfo>();
+            this.CreditRecord = new HashSet<CreditRecord>();
         }
     
         public int Id { get; set; }
@@ -37,5 +38,6 @@ namespace AuctionWeb.Models
         public virtual ICollection<GoodsInfo> GoodsInfo { get; set; }
         public virtual ICollection<LeaveWord> LeaveWord { get; set; }
         public virtual ICollection<OrderInfo> OrderInfo { get; set; }
+        public virtual ICollection<CreditRecord> CreditRecord { get; set; }
     }
 }

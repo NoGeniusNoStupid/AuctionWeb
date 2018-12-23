@@ -87,7 +87,7 @@ namespace AuctionWeb.Controllers.AdminPage
             Info.State = "付款成功";
             DB.Entry(Info).State = System.Data.EntityState.Modified;
             DB.SaveChanges();
-            return RedirectToAction("Manage");
+            return RedirectDialogToAction("Manage", "OrderInfo","支付成功！！");
         }
         //删除
         public ActionResult Delete(int id)

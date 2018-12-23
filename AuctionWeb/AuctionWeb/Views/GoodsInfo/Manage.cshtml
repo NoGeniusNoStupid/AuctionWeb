@@ -41,7 +41,7 @@
             <th>倒计时</th>*@
         <th>审核状态</th>
         <th>拍卖状态</th>
-
+        <th>卖家</th>
         @if (Session["AdminId"] != null)
         {
             <th>审核</th>
@@ -67,6 +67,16 @@
                     <td class="center">@item.CountDown</td>*@
                 <td class="center">@item.isSucc</td>
                 <td class="center">@item.Status</td>
+
+                @if(item.Purchaser==null)
+                {
+                    <td class="center">管理员：@item.Administrators.AdminName</td>
+                }
+                else
+                {
+                      <td class="center">用户：@item.Purchaser.Username</td>
+                }
+               
                 @if (Session["AdminId"] != null)
                 {
 

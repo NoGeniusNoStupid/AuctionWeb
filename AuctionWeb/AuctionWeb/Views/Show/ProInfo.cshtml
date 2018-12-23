@@ -65,6 +65,8 @@
                     <p><strong>藏品名称：@Model.GoodsName</strong></p>
                     <p><strong>藏品类型：@Model.GoodsType </strong></p>
                     <p><strong>起拍价格：@Model.BeginPrice 元</strong></p>
+                    <p><strong>佣金：10%</strong></p>
+                    <p><strong>运费：200 元</strong></p>
                     <p><strong>竞价阶梯：@Model.PriceLevel 元</strong></p>
                     <p><strong>起拍时间：@Model.StartTime </strong></p>
                     <p><strong>结束时间：@Model.EndTime</strong></p>
@@ -111,7 +113,7 @@
 
                     <p>
                         @{
-                            if (Model.Status == "进行中")
+                            if (Model.Status == "进行中"&&Model.PurchaserId!=Convert.ToInt32( Session["PurId"]))
                             {
                                 if (ViewData["CreditRecord"] == "否")
                                 {

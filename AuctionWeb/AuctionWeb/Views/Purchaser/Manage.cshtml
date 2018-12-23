@@ -40,7 +40,7 @@
                 <td class="center">@item.State</td>
                 <td class="center">@item.RegTime</td>
                 <td class="center">
-                    @if (item.State != "正常")
+                    @if (item.State == "正常")
                     {
                         <a href="/Purchaser/Blacklist/@item.Id" title="加入黑名单" class="">加入黑名单</a>
                     }
@@ -48,7 +48,7 @@
                     {
                         <a href="/Purchaser/Blacklist/@item.Id" title="撤销">撤销</a>
                     }
-                    <a href="/Purchaser/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
+                    @*<a href="/Purchaser/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>*@
                 </td>
             </tr>
         }

@@ -31,17 +31,19 @@ namespace AuctionWeb.Publcie
             DateTime dt = DateTime.Now;
             foreach (var item in goodsLits)
             {
+               
                 if (dt > item.EndTime)
                 {
                     if (item.AuctionDetails == null && item.AuctionDetails.Count <= 0)
                         state = "流拍";
                     else
                     {
-                   
                         state = "成功"; 
                         //生成订单
                         CreateOrder(item);
                     }
+                    //退还押金
+                    OutDePosit(item);
                 }
                 if (dt < item.StartTime)
                 {
@@ -59,6 +61,8 @@ namespace AuctionWeb.Publcie
                             state = "成功";
                             //生成订单
                             CreateOrder(item);
+                            //退还押金
+                            OutDePosit(item);
                         }
                     }
                 }
@@ -67,6 +71,18 @@ namespace AuctionWeb.Publcie
                 DB.Entry(item).State = EntityState.Modified;
             }
             DB.SaveChanges();
+        }
+        //退还押金
+        private static void OutDePosit(GoodsInfo item)
+        {
+            var CreditRecordList = item.CreditRecord;
+
+            foreach (var CreditRecord in CreditRecordList)
+            {
+                CreditRecord.Status = "退还";
+                DB.Entry(CreditRecord).State = EntityState.Modified;
+                DB.SaveChanges();
+            }
         }
         //生成订单
         private static void CreateOrder(GoodsInfo item)

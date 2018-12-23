@@ -154,6 +154,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CreditRecord_Purchaser">
+          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
+          <End Role="CreditRecord" Type="Self.CreditRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchaser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditRecord">
+              <PropertyRef Name="PurchaserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GoodsInfo_Administrators">
           <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -243,6 +255,10 @@
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
             <End Role="CreditRecord" EntitySet="CreditRecord" />
           </AssociationSet>
+          <AssociationSet Name="FK_CreditRecord_Purchaser" Association="Self.FK_CreditRecord_Purchaser">
+            <End Role="Purchaser" EntitySet="Purchaser" />
+            <End Role="CreditRecord" EntitySet="CreditRecord" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoodsInfo_Administrators" Association="Self.FK_GoodsInfo_Administrators">
             <End Role="Administrators" EntitySet="Administrators" />
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
@@ -302,6 +318,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_CreditRecord_GoodsInfo" FromRole="CreditRecord" ToRole="GoodsInfo" />
+          <NavigationProperty Name="Purchaser" Relationship="AuctionWebModel.FK_CreditRecord_Purchaser" FromRole="CreditRecord" ToRole="Purchaser" />
         </EntityType>
         <EntityType Name="GoodsInfo">
           <Key>
@@ -392,6 +409,7 @@
           <NavigationProperty Name="GoodsInfo" Relationship="Self.FK_GoodsInfo_Purchaser" FromRole="Purchaser" ToRole="GoodsInfo" />
           <NavigationProperty Name="LeaveWord" Relationship="Self.FK_leaveWord_Purchaser" FromRole="Purchaser" ToRole="LeaveWord" />
           <NavigationProperty Name="OrderInfo" Relationship="Self.FK_OrderInfo_Purchaser" FromRole="Purchaser" ToRole="OrderInfo" />
+          <NavigationProperty Name="CreditRecord" Relationship="AuctionWebModel.FK_CreditRecord_Purchaser" FromRole="Purchaser" ToRole="CreditRecord" />
         </EntityType>
         <Association Name="FK_GoodsInfo_Administrators">
           <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
@@ -532,7 +550,23 @@
             <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="OrderInfo" EntitySet="OrderInfo" />
           </AssociationSet>
+          <AssociationSet Name="FK_CreditRecord_Purchaser" Association="AuctionWebModel.FK_CreditRecord_Purchaser">
+            <End Role="Purchaser" EntitySet="Purchaser" />
+            <End Role="CreditRecord" EntitySet="CreditRecord" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_CreditRecord_Purchaser">
+          <End Type="AuctionWebModel.Purchaser" Role="Purchaser" Multiplicity="0..1" />
+          <End Type="AuctionWebModel.CreditRecord" Role="CreditRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchaser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CreditRecord">
+              <PropertyRef Name="PurchaserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

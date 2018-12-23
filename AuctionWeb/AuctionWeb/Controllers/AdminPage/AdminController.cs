@@ -85,6 +85,7 @@ namespace AuctionWeb.Controllers.AdminPage
             DB.SaveChanges();
             return RedirectToAction("Manage");
         }
+
         //删除
         public ActionResult Delete(int id)
         {

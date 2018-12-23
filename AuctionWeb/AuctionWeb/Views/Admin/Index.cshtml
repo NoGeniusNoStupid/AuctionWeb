@@ -6,15 +6,15 @@
     <h2><strong style="color:grey;">首页</strong></h2>
     <ul class="ulColumn2">
         <li>
-            <span class="item_name" style="width:120px;">本系统俊婷开发</span>
+            <span class="item_name" style="width:223px;">本系统由3158905126温俊婷开发</span>
         </li>
         <li>
-            <span class="item_name" style="width:120px;">指导老师：XXXX</span>
+            <span class="item_name" style="width:141px;">指导老师：肖琳老师</span>
         </li>
         @if (Session["AdminId"] == null)
         {
              <li>
-                <span class="item_name" style="width:120px;">我发布的产品：</span>
+                <span class="item_name" style="width:111x;">我发布的产品：</span>
                  <label>@ViewData["GoodsInfo"] 件</label>
             </li>
             <li>
@@ -25,15 +25,15 @@
         else
         {
             <li>
-                <span class="item_name" style="width:120px;">系统拥有会员：</span>
+                <span class="item_name" style="width:111px;">系统拥有会员：</span>
                 <label>@ViewData["Purchaser"] 人</label>
             </li>
             <li>
-                <span class="item_name" style="width:120px;">系统目前藏品：</span>
+                <span class="item_name" style="width:109px;">系统目前藏品：</span>
                 <label>@ViewData["GoodsInfo"] 件</label>
             </li>
             <li>
-                <span class="item_name" style="width:120px;">系统交易：</span>
+                <span class="item_name" style="width:80px;">系统交易：</span>
                 <label>@ViewData["OrderInfo"] 单</label>
             </li>
         }

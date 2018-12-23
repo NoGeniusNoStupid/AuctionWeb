@@ -73,6 +73,33 @@ namespace AuctionWeb.Controllers.AdminPage
 
             return View();
         }
+        //佣金记录
+        public ActionResult CommissionManage()
+        {
+            //分页设置
+            int pageIndex = Request.QueryString["pageIndex"] != null ? int.Parse(Request.QueryString["pageIndex"]) : 1;
+            int pageSize = 5;//页面记录数
+            List<OrderInfo> mlist = new List<OrderInfo>();
+            int listCount = 0;
+            if (Session["AdminId"] == null)
+            {
+                //个人用户
+                int purId = Convert.ToInt32(Session["PurId"]);
+                mlist = DB.OrderInfo.Where(a => a.GoodsInfo.PurchaserId == purId && a.State == "付款成功").OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<OrderInfo>();
+                listCount = DB.OrderInfo.Where(a => a.GoodsInfo.PurchaserId == purId && a.State == "付款成功").Count();
+            }
+            else
+            {
+                //管理员
+                mlist = DB.OrderInfo.Where(a => true && a.State == "付款成功").OrderByDescending(a => a.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList<OrderInfo>();
+                listCount = DB.OrderInfo.Where(a => true && a.State == "付款成功").Count();
+            }
+            //生成导航条
+            string strBar = ManagePageBar.GetPageBar(pageIndex, listCount, pageSize);
+            ViewData["List"] = mlist;
+            ViewData["PageBar"] = strBar;
+            return View();
+        }
         //同意
         public ActionResult Agree(int id)
         {

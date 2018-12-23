@@ -133,6 +133,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminPage\AdminController.cs" />
+    <Compile Include="Controllers\Public\CreditRecordController.cs" />
     <Compile Include="Controllers\Public\GoodsInfoController.cs" />
     <Compile Include="Controllers\AdminPage\NewsController.cs" />
     <Compile Include="Controllers\Public\OrderInfoController.cs" />
@@ -899,6 +900,8 @@
     <Content Include="Views\FrontPurchaser\Edit.cshtml" />
     <Content Include="Views\FrontPurchaser\UpdatePwd.cshtml" />
     <Content Include="Views\OrderInfo\Evaluate.cshtml" />
+    <Content Include="Views\CreditRecord\Manage.cshtml" />
+    <Content Include="Views\GoodsInfo\CommissionManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

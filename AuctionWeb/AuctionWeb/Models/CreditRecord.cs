@@ -23,5 +23,6 @@ namespace AuctionWeb.Models
         public Nullable<System.DateTime> AddTime { get; set; }
     
         public virtual GoodsInfo GoodsInfo { get; set; }
+        public virtual Purchaser Purchaser { get; set; }
     }
 }
