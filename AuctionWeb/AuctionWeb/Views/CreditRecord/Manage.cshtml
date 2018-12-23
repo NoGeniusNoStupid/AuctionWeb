@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="page_title">
+    <h2 class="fl">押金管理</h2>
+
+</div>
+<table class="table">
+    <tr>
+        <th>编号</th>
+        <th>商品名称</th>
+        @if(Session["AdminId"]!=null)
+        {
+               <th>用户名</th>
+               <th>姓名</th>
+        }
+        <th>押金金额</th>
+        <th>付款方式</th>
+        <th>当前状态</th>
+        <th>缴纳时间</th>
+    </tr>
+    @{
+        List<AuctionWeb.Models.CreditRecord> mlist = (List<AuctionWeb.Models.CreditRecord>)ViewData["List"];
+        foreach (var item in mlist)
+        {
+            <tr>
+                <td class="center">@item.Id</td>
+                <td class="center">@item.GoodsInfo.GoodsName</td>
+                @if (Session["AdminId"] != null)
+                {
+                    <td class="center">@item.Purchaser.Username</td>
+                    <td class="center">@item.Purchaser.TrueName</td>
+                }
+                <td class="center">@item.CreditPrice</td>
+             
+                <td class="center">@item.PayType</td>
+                <td class="center">@item.Status</td>
+                <td class="center">@item.AddTime</td>
+            </tr>
+        }
+    }
+</table>
+<aside class="paging">
+    @Html.Raw(ViewData["PageBar"])
+
+</aside>
