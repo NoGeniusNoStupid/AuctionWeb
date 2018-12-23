@@ -85,5 +85,13 @@ namespace AuctionWeb.Controllers.AdminPage
             DB.SaveChanges();
             return RedirectToAction("Manage");
         }
+        //删除
+        public ActionResult Delete(int id)
+        {
+            var Info = DB.Administrators.FirstOrDefault(a => a.Id == id);
+            DB.Entry(Info).State = EntityState.Deleted;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
     }
 }
