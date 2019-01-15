@@ -14,27 +14,43 @@
         @if (Session["AdminId"] == null)
         {
              <li>
-                <span class="item_name" style="width:111x;">我发布的产品：</span>
+                <span class="item_name" style="width: 120px;">我发布的产品：</span>
                  <label>@ViewData["GoodsInfo"] 件</label>
             </li>
             <li>
                 <span class="item_name" style="width:120px;">我成交：</span>
                 <label>@ViewData["OrderInfo"] 单</label>
             </li> 
+            <li>
+                <span class="item_name" style="width: 120px;">上月成交量：</span>
+                <label>@ViewData["SuccessCount"] 单</label>
+            </li>
+            <li>
+                <span class="item_name" style="width: 120px;">上月流拍量：</span>
+                <label>@ViewData["FailCount"] 单</label>
+            </li>
         }
         else
         {
             <li>
-                <span class="item_name" style="width:111px;">系统拥有会员：</span>
+                <span class="item_name" style="width: 120px;">系统拥有会员：</span>
                 <label>@ViewData["Purchaser"] 人</label>
             </li>
             <li>
-                <span class="item_name" style="width:109px;">系统目前藏品：</span>
+                <span class="item_name" style="width: 120px;">系统目前藏品：</span>
                 <label>@ViewData["GoodsInfo"] 件</label>
             </li>
             <li>
-                <span class="item_name" style="width:80px;">系统交易：</span>
+                <span class="item_name" style="width: 120px;">系统交易：</span>
                 <label>@ViewData["OrderInfo"] 单</label>
+            </li>
+            <li>
+                <span class="item_name" style="width: 120px;">上月成交量：</span>
+                <label>@ViewData["SuccessCount"] 单</label>
+            </li>
+            <li>
+                <span class="item_name" style="width: 120px;">上月流拍量：</span>
+                <label>@ViewData["FailCount"] 单</label>
             </li>
         }
 

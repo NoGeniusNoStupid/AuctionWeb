@@ -137,6 +137,34 @@ namespace AuctionWeb.Controllers.AdminPage
             DB.SaveChanges();
             return RedirectToAction("Manage");
         }
-        
+
+        //发货
+        public ActionResult SendGoosd(int id)
+        {
+            var Info = DB.OrderInfo.FirstOrDefault(a => a.Id == id);
+
+            Info.WuliState = "已发货";
+
+            DB.Entry(Info).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+        //收货
+        public ActionResult ReceiveGoosd(int id)
+        {
+            var Info = DB.OrderInfo.FirstOrDefault(a => a.Id == id);
+
+            Info.WuliState = "已收货";
+
+            DB.Entry(Info).State = System.Data.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Manage");
+        }
+      
+
+
+
+
+
     }
 }

@@ -33,6 +33,7 @@
         <th>联系电话</th>
         <th>付款方式</th>
         <th>订单状态</th>
+        <th>物流信息</th>
         <th>投诉状态</th>
         <th>投诉内容</th>
         <th>投诉时间</th>
@@ -56,6 +57,7 @@
                 <td class="center">@item.Tel</td>
                 <td class="center">@item.PayType</td>
                 <td class="center">@item.State</td>
+                <td class="center">@item.WuliState</td>
                 <td class="center">@item.EvaluateState</td>
                 <td class="center">@item.Evaluate</td>
                 <td class="center">@item.EvaluateTime</td>
@@ -67,16 +69,25 @@
                     @if (item.State == "付款成功" && string.IsNullOrEmpty(item.EvaluateState) && Session["PurId"] != null)
                     {
                         <a href="/OrderInfo/Evaluate/@item.Id" onclick="return confirm('确认要投诉此订单？')" title="投诉" class="">投诉</a>
+
                     }
                     else if (item.EvaluateState == "投诉" && Session["PurId"] != null)
                     {
                         <a href="/OrderInfo/CancelEvaluate/@item.Id" onclick="return confirm('确认要撤销此订单？')" title="撤销" class="">撤销</a>
                     }
-                    
-                   @if (Session["AdminId"] != null && item.EvaluateState == "投诉")
-                   {
+
+                    @if (Session["AdminId"] != null && item.EvaluateState == "投诉")
+                    {
                         <a href="/OrderInfo/DoneEvaluate/@item.Id" onclick="return confirm('确定要处理投诉吗？')" title="处理" class="">处理</a>
-                   }
+                    }
+                    @if (Session["AdminId"] != null && item.State == "付款成功" && item.WuliState == "未发货")
+                    {
+                        <a href="/OrderInfo/SendGoosd/@item.Id" onclick="return confirm('确定要发货吗？')" title="确认发货" class="">确认发货</a>
+                    }
+                    @if (Session["PurId"] != null && item.State == "付款成功" && item.WuliState == "已发货")
+                    {
+                        <a href="/OrderInfo/ReceiveGoosd/@item.Id" onclick="return confirm('确定要收货吗？')" title="确认收货" class="">确认收货</a>
+                    }
                     <a href="/OrderInfo/Delete/@item.Id" title="删除" onclick="return confirm('确认要删除吗')" class="link_icon">&#100;</a>
                 </td>
             </tr>

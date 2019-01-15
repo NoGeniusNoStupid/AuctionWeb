@@ -37,8 +37,11 @@ namespace AuctionWeb.Controllers
                    return RedirectDialogToAction("该用户已被加入黑名单，请联系管理员处理！", true);
 
                Session["PurId"] = purchaser.Id;
+               Session["Username"] = purchaser.Username;
+               Session["TrueName"] = purchaser.TrueName;
                Session["Role"] = "用户";
                Session["AdminId"] = null;
+               Session["AdminName"] = null;
                return RedirectToAction("Index", "Home");
            }
         }
@@ -47,6 +50,8 @@ namespace AuctionWeb.Controllers
         {
             Session["PurId"] = null;
             Session["Role"] = null;
+            Session["Username"] = null;
+            Session["TrueName"] = null;
             return RedirectToAction("Index", "Home");
         }
         //获取验证码
@@ -89,6 +94,7 @@ namespace AuctionWeb.Controllers
         {
             Session["AdminId"] = null;
             Session["Role"] = null;
+            Session["AdminName"] = null;
             return View();
         }
         [HttpPost]
@@ -104,8 +110,12 @@ namespace AuctionWeb.Controllers
             else
             {
                 Session["AdminId"] = administrators.Id;
+                Session["AdminName"] = administrators.AdminName;
                 Session["Role"] = "管理员";
+
                 Session["PurId"] = null;
+                Session["Username"] = null;
+                Session["TrueName"] = null;
                 return RedirectToAction("Index", "Admin");
             }
         }

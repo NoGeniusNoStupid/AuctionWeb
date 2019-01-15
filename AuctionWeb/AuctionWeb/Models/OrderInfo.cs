@@ -27,6 +27,7 @@ namespace AuctionWeb.Models
         public string Evaluate { get; set; }
         public Nullable<System.DateTime> EvaluateTime { get; set; }
         public string EvaluateState { get; set; }
+        public string WuliState { get; set; }
     
         public virtual GoodsInfo GoodsInfo { get; set; }
         public virtual Purchaser Purchaser { get; set; }

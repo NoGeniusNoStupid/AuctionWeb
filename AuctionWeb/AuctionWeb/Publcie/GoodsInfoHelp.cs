@@ -96,6 +96,7 @@ namespace AuctionWeb.Publcie
             orderInfo.BuyTime = AuctionDetails.AddTime;
             orderInfo.AddTime = DateTime.Now;
             orderInfo.State = "未付款";
+            orderInfo.WuliState = "未发货";
             DB.OrderInfo.Add(orderInfo);
             DB.SaveChanges();
         }

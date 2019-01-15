@@ -59,7 +59,16 @@
     <!--aside nav-->
     <!--aside nav-->
     <aside class="lt_aside_nav content mCustomScrollbar">
-        <h2><a href="/Admin/Index">系统首页</a></h2>
+        <h2>
+            @if (Session["AdminId"] != null)
+            {
+                  <a href="/Admin/Index">管理员：@Session["AdminName"]</a>
+            }
+            else 
+            { 
+                  <a href="/Admin/Index">用户中心：@Session["TrueName"]</a>
+            }
+        </h2>
         @if (Session["AdminId"] != null)
         {
             <ul>

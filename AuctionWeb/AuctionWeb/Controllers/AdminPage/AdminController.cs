@@ -15,23 +15,32 @@ namespace AuctionWeb.Controllers.AdminPage
         //系统首页
         public ActionResult Index()
         {
-           
+
             if (Session["Role"] == null)
             {
                 string msg = "请先登录，再进行操作！";
-                return  RedirectDialogToAction("Login", "Login", msg);
+                return RedirectDialogToAction("Login", "Login", msg);
             }
-            if (Session["AdminId"]==null)
+            //获取上个月第一天与最后一天
+            DateTime DateNow = DateTime.Now.AddMonths(-1);
+            DateTime DateBegin = new DateTime(DateNow.Year, DateNow.Month, 1);//上个月第一天
+            DateTime DateEnd = DateBegin.AddMonths(1).AddDays(-1);//上个月最后一天
+
+            if (Session["AdminId"] == null)
             {
                 int purId = Convert.ToInt32(Session["PurId"]);
                 ViewData["GoodsInfo"] = DB.GoodsInfo.Where(a => a.PurchaserId == purId).Count();
                 ViewData["OrderInfo"] = DB.OrderInfo.Where(a => a.PurchaserId == purId).Count();
+                ViewData["SuccessCount"] = DB.GoodsInfo.Where(a => a.PurchaserId == purId && a.Status == "成功" && a.StartTime > DateBegin && a.StartTime < DateEnd).Count();
+                ViewData["FailCount"] = DB.GoodsInfo.Where(a => a.PurchaserId == purId && a.Status == "流拍" && a.StartTime > DateBegin && a.StartTime < DateEnd).Count();
             }
             else
             {
-               ViewData["Purchaser"] = DB.Purchaser.Where(a => true).Count();
-               ViewData["GoodsInfo"] = DB.GoodsInfo.Where(a => true).Count();
-               ViewData["OrderInfo"] = DB.OrderInfo.Where(a => true).Count();
+                ViewData["Purchaser"] = DB.Purchaser.Where(a => true).Count();
+                ViewData["GoodsInfo"] = DB.GoodsInfo.Where(a => true).Count();
+                ViewData["OrderInfo"] = DB.OrderInfo.Where(a => true).Count();
+                ViewData["SuccessCount"] = DB.GoodsInfo.Where(a => a.Status == "成功" && a.StartTime > DateBegin && a.StartTime < DateEnd).Count();
+                ViewData["FailCount"] = DB.GoodsInfo.Where(a => a.Status == "流拍" && a.StartTime > DateBegin && a.StartTime < DateEnd).Count();
             }
 
 
@@ -72,7 +81,7 @@ namespace AuctionWeb.Controllers.AdminPage
         public ActionResult UpdatePwd(int id)
         {
             var Info = DB.Administrators.FirstOrDefault(a => a.Id == id);
-           
+
             return View(Info);
         }
         //密码修改

@@ -58,7 +58,6 @@ namespace AuctionWeb.Controllers
             string strTip = string.Format(@"<script languge='javascript'>alert('{0}');{1}</script>", msg, tip);
             Response.Write(strTip);
             return null;
-
         }
 
     }

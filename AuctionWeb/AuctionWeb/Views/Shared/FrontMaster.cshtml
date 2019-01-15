@@ -20,7 +20,20 @@
         <div class="xian">&nbsp;</div>
         <div class="cont">
             <div class="contLeft">
-                <h1 class="logo"><a href="index.html"><img src="/Content/images/logo.png" width="183" height="160" /></a></h1>
+                <h3 class="logo">
+                    <a href="index.html">
+                        <img src="/Content/images/logo.png" width="183" height="160" />
+                    </a>
+
+                    @if(Session["Username"]!=null)
+                    {
+                    <span>
+                        用户名：@Session["Username"]<br />
+                        姓名：@Session["TrueName"]
+                    </span>
+                    }
+                </h3>
+                <h3></h3>
                 <ul class="nav">
                     @*<li><a href="/Home/Index">首页</a></li>*@
                     <li><a href="/Home/Index">首页</a></li>
@@ -29,29 +42,29 @@
                     <li><a href="/Home/Message">在线留言</a></li>
                     <li><a href="/Home/Contact">联系我们</a></li>
                     @if (Session["PurId"] == null)
-                    { 
-                       <li><a href="/Login/Login">用户登陆</a></li>
-                       <li><a href="/Login/Register">用户注册</a></li>
+                    {
+                        <li><a href="/Login/Login">用户登陆</a></li>
+                        <li><a href="/Login/Register">用户注册</a></li>
                     }
                     else
                     {
-                       <li><a href="/Admin/Index">个人中心</a></li>
-                       <li><a href="/Login/Out">退出</a></li>
+                        @*<li><a href="#"> 用户名：@Session["Username"]</a></li>
+                            <li><a href="#">姓名：@Session["TrueName"]</a></li>*@
+                        <li><a href="/Admin/Index">个人中心</a></li>
+                        <li><a href="/Login/Out">退出</a></li>
                     }
                 </ul><!--nav/-->
             </div><!--contLeft/-->
-            <div class="contRight" >
+            <div class="contRight">
                 <div class="banner">
                     <img src="/Content/images/banner.jpg" width="722" height="236" />
                 </div><!--banner/-->
                 @RenderBody()
             </div>
-                <!--contRight/-->
+            <!--contRight/-->
             <div class="clear"></div>
-            </div><!--cont/-->
+        </div><!--cont/-->
     </div><!--mianCont-->
-
-
     @RenderSection("foot", required: false)
     <div class="link">
         <h3>友情链接</h3>

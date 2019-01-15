@@ -98,6 +98,7 @@
           <Property Name="Evaluate" Type="varchar" MaxLength="50" />
           <Property Name="EvaluateTime" Type="datetime" />
           <Property Name="EvaluateState" Type="varchar" MaxLength="10" />
+          <Property Name="WuliState" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Purchaser">
           <Key>
@@ -115,9 +116,7 @@
           <Property Name="RegTime" Type="datetime" />
         </EntityType>
         <Association Name="FK_AuctionDetails_GoodsInfo">
-          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1" />
           <End Role="AuctionDetails" Type="Self.AuctionDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GoodsInfo">
@@ -141,9 +140,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CreditRecord_GoodsInfo">
-          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1" />
           <End Role="CreditRecord" Type="Self.CreditRecord" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GoodsInfo">
@@ -154,22 +151,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CreditRecord_Purchaser">
-          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
-          <End Role="CreditRecord" Type="Self.CreditRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Purchaser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CreditRecord">
-              <PropertyRef Name="PurchaserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GoodsInfo_Administrators">
-          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Administrators" Type="Self.Administrators" Multiplicity="0..1" />
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Administrators">
@@ -181,9 +164,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_GoodsInfo_Purchaser">
-          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Purchaser" Type="Self.Purchaser" Multiplicity="0..1" />
           <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Purchaser">
@@ -209,9 +190,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderInfo_GoodsInfo">
-          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="GoodsInfo" Type="Self.GoodsInfo" Multiplicity="0..1" />
           <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GoodsInfo">
@@ -253,10 +232,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_CreditRecord_GoodsInfo" Association="Self.FK_CreditRecord_GoodsInfo">
             <End Role="GoodsInfo" EntitySet="GoodsInfo" />
-            <End Role="CreditRecord" EntitySet="CreditRecord" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CreditRecord_Purchaser" Association="Self.FK_CreditRecord_Purchaser">
-            <End Role="Purchaser" EntitySet="Purchaser" />
             <End Role="CreditRecord" EntitySet="CreditRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsInfo_Administrators" Association="Self.FK_GoodsInfo_Administrators">
@@ -390,6 +365,7 @@
           <Property Name="Evaluate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EvaluateTime" Type="DateTime" Precision="3" />
           <Property Name="EvaluateState" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="WuliState" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Purchaser">
           <Key>
@@ -658,6 +634,7 @@
           <EntitySetMapping Name="OrderInfo">
             <EntityTypeMapping TypeName="AuctionWebModel.OrderInfo">
               <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="WuliState" ColumnName="WuliState" />
                 <ScalarProperty Name="EvaluateState" ColumnName="EvaluateState" />
                 <ScalarProperty Name="EvaluateTime" ColumnName="EvaluateTime" />
                 <ScalarProperty Name="Evaluate" ColumnName="Evaluate" />
